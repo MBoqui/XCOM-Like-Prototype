@@ -100,7 +100,7 @@ namespace GridSystem
             return TryDestroyObject((Vector2Int)gridPosition);
         }
 
-        GridElement GetGridElement(Vector2Int gridPosition)
+        public GridElement GetGridElement(Vector2Int gridPosition)
         {
             if (!IsInGrid(gridPosition)) return null;
 
@@ -130,40 +130,6 @@ namespace GridSystem
                 return false;
             } else {
                 return true;
-            }
-        }
-
-        class GridElement
-        {
-            Vector2Int gridLocation;
-
-            //TerrainType ...
-            GridObject gridObject;
-
-            public GridElement(Vector2Int gridLocation)
-            {
-                this.gridLocation = gridLocation;
-            }
-
-            public bool IsFree()
-            {
-                return gridObject == null;
-            }
-
-            public void SetGridObject(GridObject gridObject)
-            {
-                this.gridObject = gridObject;
-                gridObject.SetGridLocation(gridLocation);
-            }
-
-            public void RemoveGridObject()
-            {
-                gridObject = null;
-            }
-
-            public void DestroyGridObject()
-            {
-                gridObject.DestroySelf();
             }
         }
     }
