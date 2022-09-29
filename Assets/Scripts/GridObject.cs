@@ -29,5 +29,20 @@ namespace GridSystem
 
             return gridObject;
         }
+
+        public void SetGridLocation(Vector2Int newGridLocation)
+        {
+            if (!grid.IsInGrid(newGridLocation))
+            {
+                Debug.LogError("tried setting GridObject outside of grid");
+                return;
+            }
+            gridLocation = newGridLocation;
+        }
+
+        public void DestroySelf()
+        {
+            Destroy(gameObject);
+        }
     }
 }

@@ -21,5 +21,10 @@ public class GameManager : MonoBehaviour
         {
             grid.TryAddObject(prefab, worldMousePosition);
         }
+
+        if (Input.GetMouseButtonDown(1))
+        {
+            grid.TryDestroyObject(worldMousePosition);
+        }
     }
 }
