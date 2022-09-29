@@ -152,6 +152,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7a9851f20d945144ea48d0d175f2cce6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  prefab: {fileID: 8745395829710228750, guid: 74b151dfac3b53d4a8b390b5e2f9ef8f, type: 3}
   gridSize: {x: 128, y: 128}
 --- !u!4 &648617730
 Transform:

@@ -5,6 +5,7 @@ using Grid = GridSystem.Grid;
 
 public class GameManager : MonoBehaviour
 {
+    [SerializeField] GameObject prefab;
     [SerializeField] Vector2Int gridSize = new Vector2Int(128, 128);
     Grid grid;
 
@@ -15,7 +16,10 @@ public class GameManager : MonoBehaviour
 
     void Update()
     {
-        Vector3 worldPos = Boqui.Utils.GetMouseWorldPosition(LayerMask.GetMask("Ground"));
-        Debug.Log(grid.GetXY(worldPos));
+        Vector3 worldMousePosition = Boqui.Utils.GetMouseWorldPosition(LayerMask.GetMask("Ground"));
+        if (Input.GetMouseButtonDown(0))
+        {
+            grid.TryAddObject(prefab, worldMousePosition);
+        }
     }
 }

@@ -6,15 +6,26 @@ namespace GridSystem
 {
     public class GridObject : MonoBehaviour
     {
-        private Vector2Int gridLocation;
+        Grid grid;
+        Vector2Int gridLocation;
 
-        public static GridObject Create(Grid grid, GameObject prefab, Vector3 worldPosition)
+        public static GridObject Create(Grid grid, GameObject prefab, Vector2Int gridPosition)
         {
-            //instantiate prefab
-            GameObject gridObjectGameObject = Instantiate(prefab, worldPosition, Quaternion.identity);
+            //check if object can be built in grid
+            Vector3? worldPosition = grid.GetWorldPosition(gridPosition);
+            if (worldPosition == null)
+            {
+                Debug.LogWarning("tried adding object outside of grid");
+                return null;
+            }
 
-            //add this component and return
+            //instantiate prefab
+            GameObject gridObjectGameObject = Instantiate(prefab, (Vector3)worldPosition, Quaternion.identity);
+
+            //setup component
             GridObject gridObject = gridObjectGameObject.AddComponent<GridObject>();
+            gridObject.grid = grid;
+            gridObject.gridLocation = gridPosition;
 
             return gridObject;
         }
