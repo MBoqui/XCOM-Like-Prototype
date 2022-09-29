@@ -23,7 +23,7 @@ public class GameManager : MonoBehaviour
 
         if (Input.GetMouseButtonDown(0))
         {
-            grid.TryAddObject(prefab, worldMousePosition);
+            grid.TryAddObject(prefab, worldMousePosition, true);
         }
 
         if (Input.GetMouseButtonDown(1))

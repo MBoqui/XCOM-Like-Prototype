@@ -18,6 +18,7 @@ namespace GridSystem
         public int gCost;
         public int hCost;
         public int fCost;
+        public bool isBlocked;
         public GridElement parentElement;
 
         public GridElement(Grid grid, Vector2Int gridLocation)
@@ -35,6 +36,11 @@ namespace GridSystem
         {
             this.gridObject = gridObject;
             gridObject.SetGridLocation(gridLocation);
+        }
+
+        public void SetIsBlocked(bool value) 
+        {
+            isBlocked = value;
         }
 
         public void RemoveGridObject()

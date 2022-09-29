@@ -60,6 +60,11 @@ namespace GridSystem
                 foreach (GridElement neighbourElement in currentElement.GetNeighbourList())
                 {
                     if (closedList.Contains(neighbourElement)) continue;
+                    if (neighbourElement.isBlocked)
+                    {
+                        closedList.Add(neighbourElement);
+                        continue;
+                    }
 
                     //if gCost better than previously thought, update element path info
                     int newGCost = currentElement.gCost + CalculateTravelCost(currentElement, neighbourElement);

@@ -53,7 +53,7 @@ namespace GridSystem
             return new Vector3(xPosition, 0, zPosition);
         }
 
-        public bool TryAddObject(GameObject prefab, Vector2Int gridPosition)
+        public bool TryAddObject(GameObject prefab, Vector2Int gridPosition, bool isObstacle = false)
         {
             GridElement element = GetGridElement(gridPosition);
 
@@ -67,16 +67,17 @@ namespace GridSystem
             if (newGridObject == null) return false;
 
             element.SetGridObject(newGridObject);
+            element.SetIsBlocked(isObstacle);
 
             return true;
         }
 
-        public bool TryAddObject(GameObject prefab, Vector3 worldPosition)
+        public bool TryAddObject(GameObject prefab, Vector3 worldPosition, bool isObstacle = false)
         {
             Vector2Int? gridPosition = GetGridPosition(worldPosition);
             if (gridPosition == null) return false;
 
-            return TryAddObject(prefab, (Vector2Int)gridPosition);
+            return TryAddObject(prefab, (Vector2Int)gridPosition, isObstacle);
         }
 
         public bool TryDestroyObject(Vector2Int gridPosition)
