@@ -7,7 +7,7 @@ namespace GridSystem
 {
     public class Grid
     {
-        Vector2Int gridSize;
+        public Vector2Int gridSize { get; private set; }
         GridElement[,] gridArray;
 
         //constructor
@@ -20,7 +20,7 @@ namespace GridSystem
             {
                 for (int j = 0; j < gridSize.y; j++)
                 {
-                    gridArray[i, j] = new GridElement (new Vector2Int(i, j));
+                    gridArray[i, j] = new GridElement (this, new Vector2Int(i, j));
                 }
             }
         }
