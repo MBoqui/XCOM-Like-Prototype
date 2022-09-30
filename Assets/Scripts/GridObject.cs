@@ -6,7 +6,7 @@ namespace GridSystem
 {
     public class GridObject : MonoBehaviour
     {
-        Grid grid;
+        public Grid grid { get; private set; }
         Vector2Int gridLocation;
 
         public static GridObject Create(Grid grid, GameObject prefab, Vector2Int gridPosition)
