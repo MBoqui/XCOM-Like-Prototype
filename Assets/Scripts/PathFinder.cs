@@ -14,10 +14,12 @@ namespace GridSystem
         List<GridElement> openList;
         List<GridElement> closedList;
 
+
         public PathFinder (Grid grid)
         {
             this.grid = grid;
         }
+
 
         public List<Vector2Int> FindPath(Vector2Int startPosition, Vector2Int endPosition)
         {
@@ -86,11 +88,13 @@ namespace GridSystem
             return null; //path not found
         }
 
+
         int CalculateTravelCost(GridElement fromElement, GridElement toElement)
         {
             //temporarily the same thing, change when there is cost difference between terrains
             return CalculateHCost(fromElement.gridLocation, toElement.gridLocation);
         }
+
 
         int CalculateHCost (Vector2Int fromPosition, Vector2Int toPosition)
         {
@@ -101,6 +105,7 @@ namespace GridSystem
 
             return diagonalMove * DIAGONAL_COST + straightMove * STRAIGHT_COST;
         }
+
 
         GridElement GetLowestFCostElement (List<GridElement> elementList)
         {
@@ -114,6 +119,7 @@ namespace GridSystem
             }
             return lowestFCostElement;
         }
+
 
         List<Vector2Int> CalculatePath(GridElement endElement)
         {

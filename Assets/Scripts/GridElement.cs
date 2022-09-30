@@ -21,16 +21,19 @@ namespace GridSystem
         public bool isBlocked;
         public GridElement parentElement;
 
+
         public GridElement(Grid grid, Vector2Int gridLocation)
         {
             this.grid = grid;
             this.gridLocation = gridLocation;
         }
 
+
         public bool IsFree()
         {
             return gridObject == null;
         }
+
 
         public void SetGridObject(GridObject gridObject)
         {
@@ -38,20 +41,24 @@ namespace GridSystem
             gridObject.SetGridLocation(gridLocation);
         }
 
+
         public void SetIsBlocked(bool value) 
         {
             isBlocked = value;
         }
+
 
         public void RemoveGridObject()
         {
             gridObject = null;
         }
 
+
         public void DestroyGridObject()
         {
             gridObject.DestroySelf();
         }
+
 
         public void ResetPathInfo()
         {
@@ -60,10 +67,12 @@ namespace GridSystem
             parentElement = null;
         }
 
+
         public void CalculateFCost()
         {
             fCost = gCost + hCost;
         }
+
 
         public List<GridElement> GetNeighbourList()
         {

@@ -10,15 +10,12 @@ public class CameraController : MonoBehaviour
 
     new Transform transform;
 
+
     void Awake()
     {
         transform = GetComponent<Transform>();
     }
 
-    void Start()
-    {
-        
-    }
 
     void Update()
     {
@@ -27,10 +24,12 @@ public class CameraController : MonoBehaviour
         MoveCamera();
     }
 
+
     void MoveCamera()
     {
         transform.position += moveDirection * Time.deltaTime;
     }
+
 
     void HandleInput()
     {

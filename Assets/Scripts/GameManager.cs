@@ -10,8 +10,9 @@ public class GameManager : MonoBehaviour
     [SerializeField] GameObject tankPrefab;
     [SerializeField] Vector2Int gridSize = new Vector2Int(128, 128);
     Grid grid;
-    Tank tank;
+    GridAgent tank;
     PathFinder pathFinder;
+
 
     void Awake()
     {
@@ -19,10 +20,12 @@ public class GameManager : MonoBehaviour
         pathFinder = new PathFinder(grid);
     }
 
+
     void Start()
     {
-        tank = grid.TryAddObject(tankPrefab, Vector2Int.zero).GetComponent<Tank>();
+        tank = grid.TryAddObject(tankPrefab, Vector2Int.zero).GetComponent<GridAgent>();
     }
+
 
     void Update()
     {

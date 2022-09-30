@@ -9,6 +9,7 @@ namespace GridSystem
         public Grid grid { get; private set; }
         Vector2Int gridLocation;
 
+
         public static GridObject Create(Grid grid, GameObject prefab, Vector2Int gridPosition)
         {
             //check if object can be built in grid
@@ -30,6 +31,7 @@ namespace GridSystem
             return gridObject;
         }
 
+
         public void SetGridLocation(Vector2Int newGridLocation)
         {
             if (!grid.IsInGrid(newGridLocation))
@@ -39,6 +41,7 @@ namespace GridSystem
             }
             gridLocation = newGridLocation;
         }
+
 
         public void DestroySelf()
         {

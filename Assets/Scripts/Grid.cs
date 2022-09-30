@@ -10,6 +10,7 @@ namespace GridSystem
         public Vector2Int gridSize { get; private set; }
         GridElement[,] gridArray;
 
+
         //constructor
         public Grid(Vector2Int gridSize)
         {
@@ -25,6 +26,7 @@ namespace GridSystem
             }
         }
 
+
         public Vector2Int? GetGridPosition (Vector3 worldPosition)
         {
             if (!IsInGrid(worldPosition))
@@ -39,6 +41,7 @@ namespace GridSystem
             return new Vector2Int(xPosition, yPosition);
         }
 
+
         public Vector3? GetWorldPosition (Vector2Int gridPosition)
         {
             if (!IsInGrid(gridPosition))
@@ -52,6 +55,7 @@ namespace GridSystem
 
             return new Vector3(xPosition, 0, zPosition);
         }
+
 
         public GridObject TryAddObject(GameObject prefab, Vector2Int gridPosition, bool isObstacle = false)
         {
@@ -72,6 +76,7 @@ namespace GridSystem
             return newGridObject;
         }
 
+
         public GridObject TryAddObject(GameObject prefab, Vector3 worldPosition, bool isObstacle = false)
         {
             Vector2Int? gridPosition = GetGridPosition(worldPosition);
@@ -79,6 +84,7 @@ namespace GridSystem
 
             return TryAddObject(prefab, (Vector2Int)gridPosition, isObstacle);
         }
+
 
         public bool TryDestroyObject(Vector2Int gridPosition)
         {
@@ -93,6 +99,7 @@ namespace GridSystem
             return true;
         }
 
+
         public bool TryDestroyObject(Vector3 worldPosition)
         {
             Vector2Int? gridPosition = GetGridPosition(worldPosition);
@@ -101,12 +108,14 @@ namespace GridSystem
             return TryDestroyObject((Vector2Int)gridPosition);
         }
 
+
         public GridElement GetGridElement(Vector2Int gridPosition)
         {
             if (!IsInGrid(gridPosition)) return null;
 
             return gridArray[gridPosition.x, gridPosition.y];
         }
+
 
         public bool IsInGrid(Vector2Int gridPosition)
         {
@@ -120,6 +129,7 @@ namespace GridSystem
                 return true;
             }
         }
+
 
         public bool IsInGrid(Vector3 worldPosition)
         {
