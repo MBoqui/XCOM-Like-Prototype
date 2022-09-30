@@ -8,7 +8,7 @@ namespace GridSystem
     {
         const int DIAGONAL_COST = 3;
         const int STRAIGHT_COST = 2;
-        //public PathFinder instance { get; private set; }
+
         Grid grid;
 
         List<GridElement> openList;
