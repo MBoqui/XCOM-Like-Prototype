@@ -17,6 +17,7 @@ namespace GridSystem
         List<Vector3> movePath = new List<Vector3> ();
         int currentPathIndex;
         Vector3 moveTargetPosition;
+        bool isRotating;
 
 
         void Awake()
@@ -33,13 +34,22 @@ namespace GridSystem
 
         void Update()
         {
+            HandleRotation();
+
             HandleMovement();
+        }
+
+
+        void HandleRotation()
+        {
+            transform.LookAt(moveTargetPosition);
         }
 
 
         void HandleMovement()
         {
-            if (movePath == null) return;
+            if (movePath.Count <= 0) return;
+            if (isRotating) return;
 
             moveTargetPosition = movePath[currentPathIndex];
             float distance = Vector3.Distance(moveTargetPosition, transform.position);
