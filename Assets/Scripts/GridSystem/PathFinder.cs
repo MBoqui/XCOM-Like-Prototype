@@ -21,7 +21,7 @@ namespace GridSystem
         }
 
 
-        public List<Vector2Int> FindPath(Vector2Int startPosition, Vector2Int endPosition)
+        protected internal List<Vector2Int> FindPath(Vector2Int startPosition, Vector2Int endPosition)
         {
             //reset pathfinding values in all grid
             for (int i = 0; i < grid.gridSize.x; i++)

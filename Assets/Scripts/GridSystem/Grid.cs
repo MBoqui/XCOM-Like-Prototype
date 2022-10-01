@@ -9,6 +9,7 @@ namespace GridSystem
     {
         public Vector2Int gridSize { get; private set; }
         GridElement[,] gridArray;
+        PathFinder pathFinder;
 
 
         //constructor
@@ -24,6 +25,8 @@ namespace GridSystem
                     gridArray[i, j] = new GridElement (this, new Vector2Int(i, j));
                 }
             }
+
+            pathFinder = new PathFinder(this);
         }
 
 
@@ -142,6 +145,12 @@ namespace GridSystem
             } else {
                 return true;
             }
+        }
+
+
+        public List<Vector2Int> FindPath(Vector2Int startPosition, Vector2Int endPosition)
+        {
+            return pathFinder.FindPath(startPosition, endPosition);
         }
     }
 }
