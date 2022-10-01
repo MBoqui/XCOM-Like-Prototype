@@ -46,7 +46,7 @@ namespace GridSystem
             Vector3 targetDirection = moveTargetPosition - transform.position;
             Vector3 currentDirection = transform.forward;
 
-            if (Vector3.Angle(targetDirection, currentDirection) < 0.05f)
+            if (Vector3.Angle(targetDirection, currentDirection) < 0.5f)
             {
                 isRotating = false;
                 return;
