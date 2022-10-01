@@ -8,6 +8,7 @@ namespace GridSystem
     {
         //exposed
         [SerializeField] float moveSpeed = 3f;
+        [SerializeField] float rotateSpeed = 3f;
 
         //cache
         new Transform transform;
@@ -42,7 +43,21 @@ namespace GridSystem
 
         void HandleRotation()
         {
-            transform.LookAt(moveTargetPosition);
+            Vector3 targetDirection = moveTargetPosition - transform.position;
+            Vector3 currentDirection = transform.forward;
+
+            if (Vector3.Angle(targetDirection, currentDirection) < 0.05f)
+            {
+                isRotating = false;
+                return;
+            }
+            isRotating = true;
+
+            float step = rotateSpeed * Time.deltaTime;
+
+            Vector3 newDirection = Vector3.RotateTowards(transform.forward, targetDirection, step, 0.0f);
+
+            transform.rotation = Quaternion.LookRotation(newDirection);
         }
 
 
