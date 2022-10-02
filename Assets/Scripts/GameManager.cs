@@ -17,12 +17,13 @@ public class GameManager : MonoBehaviour
     void Awake()
     {
         grid = new Grid(gridSize);
-        stateMachine = new StateMachine(grid, 1, prefab, tankPrefab);
+        stateMachine = new StateMachine(grid, 1, tankPrefab);
     }
 
 
     void Start()
     {
+        TreeManager.Instance.Initiallize(grid);
         stateMachine.SetState(new GameSetup(stateMachine));
     }
 

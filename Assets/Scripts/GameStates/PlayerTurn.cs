@@ -34,7 +34,7 @@ namespace GameStates
 
             if (Input.GetMouseButtonDown(0))
             {
-                machine.grid.TryAddObject(machine.prefab, worldMousePosition, true);
+                TreeManager.Instance.TryAddTree(worldMousePosition);
             }
 
             if (Input.GetMouseButtonDown(1))

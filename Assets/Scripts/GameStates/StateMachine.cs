@@ -10,15 +10,13 @@ namespace GameStates
     {
         State currentState;
 
-        public GameObject prefab;
         public GameObject tankPrefab;
         public Grid grid;
         public GridAgent tank;
         int numberPlayers;
 
-        public StateMachine(Grid grid, int numberPlayers, GameObject prefab, GameObject tankPrefab)
+        public StateMachine(Grid grid, int numberPlayers, GameObject tankPrefab)
         {
-            this.prefab = prefab;
             this.tankPrefab = tankPrefab;
             this.grid = grid;
             this.numberPlayers = numberPlayers;
