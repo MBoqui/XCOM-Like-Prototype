@@ -5,8 +5,10 @@ using GridSystem;
 
 public class Tank : MonoBehaviour
 {
-    [SerializeField] GameObject tankHead;
-    [SerializeField] GameObject tankWeapon;
+    [SerializeField] Transform tankHead;
+    [SerializeField] Transform tankWeapon;
+    [SerializeField] Transform weaponTip;
+    [SerializeField] Transform bodyTarget;
 
     public int playerIndex { get; private set; }
     public Vector2Int gridPosition { get => agent.gridPosition; }
@@ -32,9 +34,34 @@ public class Tank : MonoBehaviour
     }
 
 
+    public float CalculateHitChance(Tank target)
+    {
+        Vector3 aimTarget = target.GetTargetPoint();
+        AimAt(aimTarget);
+
+
+        return 0;
+    }
+
+
     public void Attack(Tank target)
     {
         Debug.Log("Attack");
+    }
+
+
+    public Vector3 GetTargetPoint()
+    {
+        return bodyTarget.position;
+    }
+
+
+    void AimAt(Vector3 target)
+    {
+        Vector3 headTurnDirection = new Vector3(target.x, 0, target.z);
+        tankHead.LookAt(headTurnDirection);
+
+        tankWeapon.LookAt(target);
     }
 
 

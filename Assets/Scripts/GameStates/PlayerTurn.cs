@@ -62,7 +62,11 @@ namespace GameStates
             {
                 if (targetUnit != null)
                 {
-                    if (targetUnit.playerIndex != playerIndex) return Action.Attack;
+                    if (targetUnit.playerIndex != playerIndex)
+                    {
+                        selectedUnit.CalculateHitChance(targetUnit);
+                        return Action.Attack;
+                    }
                 }
 
                 path = machine.grid.FindPath(selectedUnit.gridPosition, (Vector2Int)targetlocation);

@@ -355,7 +355,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a45d5f8776653394f92025f062d6e9a3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  tankPrefab: {fileID: 6923992849255323848, guid: 3745648474534d74ba1e030d10c79449, type: 3}
+  tankPrefab: {fileID: 7705744086804405579, guid: 3745648474534d74ba1e030d10c79449, type: 3}
   unitsPerPlayer: 6
   playerColors:
   - {r: 1, g: 0, b: 0, a: 0}
