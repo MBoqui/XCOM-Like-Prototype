@@ -69,12 +69,11 @@ namespace GridSystem
             if (!element.IsFree()) return null;
 
             //create object and set it to element
-            GridObject newGridObject = GridObject.Create(this, prefab, gridPosition);
+            GridObject newGridObject = GridObject.Create(this, prefab, element, isObstacle);
 
             if (newGridObject == null) return null;
 
             element.SetGridObject(newGridObject);
-            element.SetIsBlocked(isObstacle);
 
             return newGridObject;
         }

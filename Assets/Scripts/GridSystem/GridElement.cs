@@ -9,7 +9,7 @@ namespace GridSystem
     {
         //Element content
         Grid grid;
-        public Vector2Int gridLocation { get; private set; }
+        public Vector2Int gridPosition { get; private set; }
 
         //TerrainType ...
         GridObject gridObject;
@@ -18,14 +18,14 @@ namespace GridSystem
         public int gCost;
         public int hCost;
         public int fCost;
-        public bool isBlocked;
         public GridElement parentElement;
+        public GridAgent agent;
 
 
-        public GridElement(Grid grid, Vector2Int gridLocation)
+        public GridElement(Grid grid, Vector2Int gridPosition)
         {
             this.grid = grid;
-            this.gridLocation = gridLocation;
+            this.gridPosition = gridPosition;
         }
 
 
@@ -35,23 +35,35 @@ namespace GridSystem
         }
 
 
-        public void SetGridObject(GridObject gridObject)
+        public bool IsBlocked()
         {
-            this.gridObject = gridObject;
-            gridObject.SetGridLocation(gridLocation);
+            if (gridObject != null)
+            {
+                if (gridObject.isBlocker) return true;
+            }
+
+            return false;
         }
 
 
-        public void SetIsBlocked(bool value) 
+        public void SetGridObject(GridObject newGridObject)
         {
-            isBlocked = value;
+            newGridObject.SetGridElement(this);
+            gridObject = newGridObject;
+            agent = gridObject.GetComponent<GridAgent>();
+        }
+
+
+        public GridAgent GetGridAgent()
+        {
+            return agent;
         }
 
 
         public void ClearGridObject()
         {
             gridObject = null;
-            isBlocked = false;
+            agent = null;
         }
 
 
@@ -83,7 +95,7 @@ namespace GridSystem
             {
                 for (int j = -1; j <= 1; j++)
                 {
-                    Vector2Int neighbourLocation = gridLocation + new Vector2Int(i, j);
+                    Vector2Int neighbourLocation = gridPosition + new Vector2Int(i, j);
                     GridElement neighbourElement = grid.GetGridElement(neighbourLocation);
 
                     if (neighbourElement == null) continue;

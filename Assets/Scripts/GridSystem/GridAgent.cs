@@ -9,10 +9,13 @@ namespace GridSystem
         //exposed
         [SerializeField] float moveSpeed = 3f;
         [SerializeField] float rotateSpeed = 3f;
+        public Vector2Int gridPosition { get => gridObject.gridPosition; }
 
         //cache
         new Transform transform;
         Grid grid;
+        GridObject _gridObject;
+        GridObject gridObject { get => GetGridObject(); }
 
         //move
         List<Vector3> movePath = new List<Vector3> ();
@@ -77,6 +80,11 @@ namespace GridSystem
                 currentPathIndex++;
                 if (currentPathIndex >= movePath.Count)
                 {
+                    //move object in grid
+                    Vector2Int newGridPosition = (Vector2Int)grid.GetGridPosition(transform.position);
+                    GridElement newGridElement = grid.GetGridElement(newGridPosition);
+                    newGridElement.SetGridObject(gridObject);
+
                     movePath.Clear();
                 }
             }
@@ -99,13 +107,14 @@ namespace GridSystem
         }
 
 
-        public Vector2Int GetGridPosition()
+        GridObject GetGridObject()
         {
-            Vector2Int? gridPosition = grid.GetGridPosition(transform.position);
+            if (_gridObject == null)
+            {
+                _gridObject = GetComponent<GridObject>();
+            }
 
-            if (gridPosition == null) return Vector2Int.zero;
-
-            return (Vector2Int)gridPosition;
+            return _gridObject;
         }
     }
 }

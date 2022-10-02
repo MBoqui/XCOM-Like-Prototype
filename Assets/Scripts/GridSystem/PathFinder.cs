@@ -62,7 +62,7 @@ namespace GridSystem
                 foreach (GridElement neighbourElement in currentElement.GetNeighbourList())
                 {
                     if (closedList.Contains(neighbourElement)) continue;
-                    if (neighbourElement.isBlocked)
+                    if (neighbourElement.IsBlocked())
                     {
                         closedList.Add(neighbourElement);
                         continue;
@@ -74,7 +74,7 @@ namespace GridSystem
                     {
                         neighbourElement.gCost = newGCost;
                         neighbourElement.parentElement = currentElement;
-                        neighbourElement.hCost = CalculateHCost(neighbourElement.gridLocation, endPosition);
+                        neighbourElement.hCost = CalculateHCost(neighbourElement.gridPosition, endPosition);
                         neighbourElement.CalculateFCost();
 
                         if (!openList.Contains(neighbourElement))
@@ -92,7 +92,7 @@ namespace GridSystem
         int CalculateTravelCost(GridElement fromElement, GridElement toElement)
         {
             //temporarily the same thing, change when there is cost difference between terrains
-            return CalculateHCost(fromElement.gridLocation, toElement.gridLocation);
+            return CalculateHCost(fromElement.gridPosition, toElement.gridPosition);
         }
 
 
@@ -124,13 +124,13 @@ namespace GridSystem
         List<Vector2Int> CalculatePath(GridElement endElement)
         {
             List<Vector2Int> path = new List<Vector2Int>();
-            path.Add(endElement.gridLocation);
+            path.Add(endElement.gridPosition);
 
             GridElement currentElement = endElement;
 
             while (currentElement.parentElement != null)
             {
-                path.Add(currentElement.parentElement.gridLocation);
+                path.Add(currentElement.parentElement.gridPosition);
                 currentElement = currentElement.parentElement;
             }
 

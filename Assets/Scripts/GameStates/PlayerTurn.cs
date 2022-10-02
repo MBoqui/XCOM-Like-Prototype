@@ -9,7 +9,9 @@ namespace GameStates
     public class PlayerTurn : State
     {
         int playerIndex;
-        GridObject selectedUnit;
+
+        GridAgent selectedUnit;
+        List<Vector2Int> path;
 
         public PlayerTurn(int playerIndex, StateMachine machine) : base(machine)
         {
@@ -31,25 +33,34 @@ namespace GameStates
 
         public override void Execute()
         {
-            Vector3 worldMousePosition = Boqui.Utils.GetMouseWorldPosition(LayerMask.GetMask("Ground"));
+            Vector3 worldMousePosition = Boqui.Utils.GetMouseWorldPosition();
+
+            Vector2Int? targetlocation = machine.grid.GetGridPosition(worldMousePosition);
+
+            if (targetlocation == null) return;
 
             if (Input.GetMouseButtonDown(0))
             {
-                Vector2Int? targetlocation = machine.grid.GetGridPosition(worldMousePosition);
+                GridAgent targetGridAgent = machine.grid.GetGridElement((Vector2Int)targetlocation).GetGridAgent();
 
-                if (targetlocation == null) return;
-
-                List<Vector2Int> path = machine.grid.FindPath(machine.tank.GetGridPosition(), (Vector2Int)targetlocation);
-
-                if (path != null)
+                if (targetGridAgent != null) //select units
                 {
-                    machine.tank.SetMovePath(path);
-
-                    for (int i = 0; i < path.Count - 1; i++)
-                    {
-                        Debug.DrawLine(new Vector3(path[i].x + 0.5f, 0, path[i].y + 0.5f), new Vector3(path[i + 1].x + 0.5f, 0, path[i + 1].y + 0.5f), Color.red, 5f);
-                    }
+                    selectedUnit = targetGridAgent;
                 }
+
+                TryMove((Vector2Int)targetlocation);
+            }
+        }
+
+        void TryMove(Vector2Int targetlocation)
+        {
+            if (selectedUnit == null) return;
+
+            path = machine.grid.FindPath(selectedUnit.gridPosition, targetlocation);
+
+            if (path != null) //move
+            {
+                selectedUnit.SetMovePath(path);
             }
         }
     }

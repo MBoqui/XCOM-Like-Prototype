@@ -5,7 +5,7 @@ namespace Boqui
 {
     public class Utils
     {
-        public static Vector3 GetMouseWorldPosition(int layerMask)
+        public static Vector3 GetMouseWorldPosition(int layerMask = ~0)
         {
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
             if (Physics.Raycast(ray, out RaycastHit raycastHit, Mathf.Infinity, layerMask))
