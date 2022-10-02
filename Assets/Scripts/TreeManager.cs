@@ -52,6 +52,10 @@ public class TreeManager : MonoBehaviour
         return newTree;
     }
 
+    //machine.tank = machine.grid.TryAddObject(machine.tankPrefab, Vector2Int.zero).GetComponent<GridAgent>();
+
+
+
     public void GenerateRandomTrees()
     {
         for (int i = 0; i < grid.gridSize.x; i++)

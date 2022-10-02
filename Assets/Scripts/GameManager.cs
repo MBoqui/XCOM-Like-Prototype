@@ -7,9 +7,8 @@ using GameStates;
 
 public class GameManager : MonoBehaviour
 {
-    [SerializeField] GameObject prefab;
-    [SerializeField] GameObject tankPrefab;
     [SerializeField] Vector2Int gridSize = new Vector2Int(128, 128);
+    [SerializeField] int numberPlayers = 1;
 
     Grid grid;
     StateMachine stateMachine;
@@ -17,13 +16,14 @@ public class GameManager : MonoBehaviour
     void Awake()
     {
         grid = new Grid(gridSize);
-        stateMachine = new StateMachine(grid, 1, tankPrefab);
+        stateMachine = new StateMachine(grid, numberPlayers);
     }
 
 
     void Start()
     {
         TreeManager.Instance.Initiallize(grid);
+        UnitManager.Instance.Initiallize(grid, numberPlayers);
         stateMachine.SetState(new GameSetup(stateMachine));
     }
 

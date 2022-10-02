@@ -198,9 +198,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7a9851f20d945144ea48d0d175f2cce6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  prefab: {fileID: 6316804978011259040, guid: 328c8011c378d7e4d878f14bbf7f881b, type: 3}
-  tankPrefab: {fileID: 6923992849255323848, guid: 3745648474534d74ba1e030d10c79449, type: 3}
   gridSize: {x: 128, y: 128}
+  numberPlayers: 1
 --- !u!4 &648617730
 Transform:
   m_ObjectHideFlags: 0

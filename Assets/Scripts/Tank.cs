@@ -1,18 +1,41 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using GridSystem;
 
 public class Tank : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
+    public int playerIndex { get; private set; }
+    public Vector2Int gridPosition { get => agent.gridPosition; }
+    GridAgent agent;
+
+
+    void Awake()
     {
-        
+        agent = GetComponent<GridAgent>();
     }
 
-    // Update is called once per frame
-    void Update()
+
+    public void Initialize(int playerIndex)
     {
-        
+        this.playerIndex = playerIndex;
+    }
+
+
+    public void SetMovePath(List<Vector2Int> path)
+    {
+        agent.SetMovePath(path);
+    }
+
+
+    public void Attack(Tank target)
+    {
+        Debug.Log("Attack");
+    }
+
+
+    void OnDestroy()
+    {
+        UnitManager.Instance.RemoveTank(this);
     }
 }

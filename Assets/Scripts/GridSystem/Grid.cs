@@ -123,8 +123,8 @@ namespace GridSystem
         {
             if (gridPosition.x < 0 ||
                 gridPosition.y < 0 ||
-                gridPosition.x > gridSize.x ||
-                gridPosition.y > gridSize.y)
+                gridPosition.x >= gridSize.x ||
+                gridPosition.y >= gridSize.y)
             {
                 return false;
             } else {
@@ -137,8 +137,8 @@ namespace GridSystem
         {
             if (worldPosition.x < 0 ||
                 worldPosition.z < 0 ||
-                worldPosition.x > gridSize.x ||
-                worldPosition.z > gridSize.y)
+                worldPosition.x >= gridSize.x ||
+                worldPosition.z >= gridSize.y)
             {
                 return false;
             } else {

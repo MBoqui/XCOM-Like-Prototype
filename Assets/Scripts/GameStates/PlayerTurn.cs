@@ -10,8 +10,10 @@ namespace GameStates
     {
         int playerIndex;
 
-        GridAgent selectedUnit;
+        Tank selectedUnit;
+        Tank targetUnit;
         List<Vector2Int> path;
+        Action action;
 
         public PlayerTurn(int playerIndex, StateMachine machine) : base(machine)
         {
@@ -37,31 +39,86 @@ namespace GameStates
 
             Vector2Int? targetlocation = machine.grid.GetGridPosition(worldMousePosition);
 
-            if (targetlocation == null) return;
+            action = ComputeAction(targetlocation);
 
-            if (Input.GetMouseButtonDown(0))
+            ShowTips();
+
+            HandleCommand();
+        }
+
+
+        Action ComputeAction(Vector2Int? targetlocation)
+        {
+            if (targetlocation == null) return Action.None;
+
+            targetUnit = GetUnitAt((Vector2Int)targetlocation);
+
+            if (targetUnit != null)
             {
-                GridAgent targetGridAgent = machine.grid.GetGridElement((Vector2Int)targetlocation).GetGridAgent();
+                if (targetUnit.playerIndex == playerIndex) return Action.Select;
+            }
 
-                if (targetGridAgent != null) //select units
+            if (selectedUnit != null)
+            {
+                if (targetUnit != null)
                 {
-                    selectedUnit = targetGridAgent;
+                    if (targetUnit.playerIndex != playerIndex) return Action.Attack;
                 }
 
-                TryMove((Vector2Int)targetlocation);
+                path = machine.grid.FindPath(selectedUnit.gridPosition, (Vector2Int)targetlocation);
+                return Action.Move;
+            }
+
+            return Action.None;
+        }
+
+        Tank GetUnitAt(Vector2Int targetlocation)
+        {
+            GridElement element = machine.grid.GetGridElement(targetlocation);
+            if (element == null) return null;
+
+            GridAgent agent = element.GetGridAgent();
+            if (agent == null) return null;
+
+            return agent.GetComponent<Tank>();
+        }
+
+
+        void ShowTips()
+        {
+            //show hit chance, path, ap spent on action
+        }
+
+        void HandleCommand()
+        {
+            if (!Input.GetMouseButtonDown(0)) return;
+
+            switch (action){
+                case Action.Select:
+                    selectedUnit = targetUnit;
+                    break;
+                case Action.Move:
+                    TryMove();
+                    break;
+                case Action.Attack:
+                    selectedUnit.Attack(targetUnit);
+                    break;
             }
         }
 
-        void TryMove(Vector2Int targetlocation)
+        void TryMove()
         {
             if (selectedUnit == null) return;
+            if (path == null) return;
 
-            path = machine.grid.FindPath(selectedUnit.gridPosition, targetlocation);
+            selectedUnit.SetMovePath(path);
+        }
 
-            if (path != null) //move
-            {
-                selectedUnit.SetMovePath(path);
-            }
+        enum Action {
+            None,
+            Select,
+            Move,
+            Attack
         }
     }
 }
