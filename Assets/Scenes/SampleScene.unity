@@ -357,6 +357,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   tankPrefab: {fileID: 6923992849255323848, guid: 3745648474534d74ba1e030d10c79449, type: 3}
   unitsPerPlayer: 6
+  playerColors:
+  - {r: 1, g: 0, b: 0, a: 0}
+  - {r: 0, g: 0, b: 1, a: 0}
   allTanks: []
 --- !u!1 &939903765
 GameObject:

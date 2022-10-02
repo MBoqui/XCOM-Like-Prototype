@@ -440,3 +440,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5b7293d903ddfef48809fb023b6acadc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  tankHead: {fileID: 1203582245226910133}
+  tankWeapon: {fileID: 1670867575496376940}

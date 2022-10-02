@@ -13,6 +13,7 @@ public class UnitManager : MonoBehaviour
     [SerializeField] int unitsPerPlayer = 6;
     Grid grid;
     int numberPlayers;
+    [SerializeField] Color[] playerColors;
 
     public List<Tank> allTanks = new List<Tank> ();
 
@@ -54,7 +55,7 @@ public class UnitManager : MonoBehaviour
         if (newUnit != null)
         {
             Tank newTank = newUnit.GetComponent<Tank>();
-            newTank.Initialize(playerIndex);
+            newTank.Initialize(playerIndex, playerColors[playerIndex - 1]);
 
             allTanks.Add(newTank);
         }

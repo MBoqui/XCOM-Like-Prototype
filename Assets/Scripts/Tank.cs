@@ -5,6 +5,9 @@ using GridSystem;
 
 public class Tank : MonoBehaviour
 {
+    [SerializeField] GameObject tankHead;
+    [SerializeField] GameObject tankWeapon;
+
     public int playerIndex { get; private set; }
     public Vector2Int gridPosition { get => agent.gridPosition; }
     GridAgent agent;
@@ -16,9 +19,10 @@ public class Tank : MonoBehaviour
     }
 
 
-    public void Initialize(int playerIndex)
+    public void Initialize(int playerIndex, Color playerColor)
     {
         this.playerIndex = playerIndex;
+        SetColor(playerColor);
     }
 
 
@@ -31,6 +35,14 @@ public class Tank : MonoBehaviour
     public void Attack(Tank target)
     {
         Debug.Log("Attack");
+    }
+
+
+    void SetColor(Color newColor)
+    {
+        gameObject.GetComponent<Renderer>().material.color = newColor;
+        tankHead.GetComponent<Renderer>().material.color = newColor;
+        tankWeapon.GetComponent<Renderer>().material.color = newColor;
     }
 
 
