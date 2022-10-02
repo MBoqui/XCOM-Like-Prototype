@@ -32,11 +32,7 @@ namespace GridSystem
 
         public Vector2Int? GetGridPosition (Vector3 worldPosition)
         {
-            if (!IsInGrid(worldPosition))
-            {
-                Debug.Log("tried to get a position outside of grid");
-                return null;
-            }
+            if (!IsInGrid(worldPosition)) return null;
 
             int xPosition = Mathf.FloorToInt(worldPosition.x);
             int yPosition = Mathf.FloorToInt(worldPosition.z);
@@ -47,11 +43,7 @@ namespace GridSystem
 
         public Vector3? GetWorldPosition (Vector2Int gridPosition)
         {
-            if (!IsInGrid(gridPosition))
-            {
-                Debug.Log("tried to get a position outside of grid");
-                return null;
-            }
+            if (!IsInGrid(gridPosition)) return null;
 
             float xPosition = gridPosition.x + 0.5f;
             float zPosition = gridPosition.y + 0.5f;
