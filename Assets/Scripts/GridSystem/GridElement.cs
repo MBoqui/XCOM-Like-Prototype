@@ -48,9 +48,10 @@ namespace GridSystem
         }
 
 
-        public void RemoveGridObject()
+        public void ClearGridObject()
         {
             gridObject = null;
+            isBlocked = false;
         }
 
 

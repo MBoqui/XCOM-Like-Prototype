@@ -47,5 +47,10 @@ namespace GridSystem
         {
             Destroy(gameObject);
         }
+
+        void OnDestroy()
+        {
+            grid.GetGridElement(gridLocation).ClearGridObject();
+        }
     }
 }
