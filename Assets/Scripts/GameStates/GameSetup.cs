@@ -17,6 +17,9 @@ namespace GameStates
         public override void Enter()
         {
             machine.tank = machine.grid.TryAddObject(machine.tankPrefab, Vector2Int.zero).GetComponent<GridAgent>();
+
+            TreeManager.Instance.GenerateRandomTrees();
+
             Exit();
         }
 

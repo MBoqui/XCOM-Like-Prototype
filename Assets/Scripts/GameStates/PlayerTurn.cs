@@ -32,11 +32,6 @@ namespace GameStates
         {
             Vector3 worldMousePosition = Boqui.Utils.GetMouseWorldPosition(LayerMask.GetMask("Ground"));
 
-            if (Input.GetMouseButtonDown(0))
-            {
-                TreeManager.Instance.TryAddTree(worldMousePosition);
-            }
-
             if (Input.GetMouseButtonDown(1))
             {
                 machine.grid.TryDestroyObject(worldMousePosition);
