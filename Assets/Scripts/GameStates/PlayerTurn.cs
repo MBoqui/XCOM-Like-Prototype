@@ -9,6 +9,7 @@ namespace GameStates
     public class PlayerTurn : State
     {
         int playerIndex;
+        GridObject selectedUnit;
 
         public PlayerTurn(int playerIndex, StateMachine machine) : base(machine)
         {
@@ -32,12 +33,7 @@ namespace GameStates
         {
             Vector3 worldMousePosition = Boqui.Utils.GetMouseWorldPosition(LayerMask.GetMask("Ground"));
 
-            if (Input.GetMouseButtonDown(1))
-            {
-                machine.grid.TryDestroyObject(worldMousePosition);
-            }
-
-            if (Input.GetMouseButtonDown(2))
+            if (Input.GetMouseButtonDown(0))
             {
                 Vector2Int? targetlocation = machine.grid.GetGridPosition(worldMousePosition);
 
