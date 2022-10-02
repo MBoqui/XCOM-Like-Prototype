@@ -10,6 +10,10 @@ public class Tank : MonoBehaviour
     [SerializeField] Transform weaponTip;
     [SerializeField] Transform bodyTarget;
 
+    [SerializeField] int aimNumberLayers = 10;
+    [SerializeField] int aimRotationPrecision = 10;
+    [SerializeField] float aimDegreesError = 5;
+
     public int playerIndex { get; private set; }
     public Vector2Int gridPosition { get => agent.gridPosition; }
     GridAgent agent;
@@ -39,14 +43,52 @@ public class Tank : MonoBehaviour
         Vector3 aimTarget = target.GetTargetPoint();
         AimAt(aimTarget);
 
+        float deviationStep = aimDegreesError / aimNumberLayers;
+        float angleStep = 360f / aimRotationPrecision;
 
-        return 0;
+        int hits = 0;
+
+        for (int i = 1; i <= aimNumberLayers; i++)
+        {
+            for (int j = 0; j < aimRotationPrecision; j++)
+            {
+                Vector3 rayDirection = GetAimDirectionWithError(i * deviationStep, j * angleStep);
+                Ray ray = new Ray(weaponTip.position, rayDirection);
+
+                Debug.DrawRay(weaponTip.position, rayDirection * 10);
+
+                if (!Physics.Raycast(ray, out RaycastHit raycastHit, Mathf.Infinity, LayerMask.GetMask("Tank"))) continue; //didnt hit anything
+
+                Tank hitTank = raycastHit.rigidbody.GetComponent<Tank>();
+
+                if (hitTank == null) continue; //didnt hit a tank
+                if (hitTank.playerIndex == playerIndex) continue; //hit your own tank
+                
+                hits++;
+            }
+        }
+
+        return (float)hits / (aimNumberLayers * aimRotationPrecision);
     }
 
 
     public void Attack(Tank target)
     {
+        float deviation = Random.Range(0f, aimDegreesError);
+        float angle = Random.Range(0f, 360f);
+
         Debug.Log("Attack");
+    }
+
+
+    Vector3 GetAimDirectionWithError(float deviation, float angle)
+    {
+        Vector3 aimVector = Vector3.forward;
+        aimVector = Quaternion.AngleAxis(deviation, Vector3.up) * aimVector;
+        aimVector = Quaternion.AngleAxis(angle, Vector3.forward) * aimVector;
+        aimVector = weaponTip.rotation * aimVector;
+
+        return aimVector;
     }
 
 

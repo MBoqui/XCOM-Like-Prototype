@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6819256228156088833}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Tip
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -43,7 +43,7 @@ GameObject:
   - component: {fileID: 8557944092708758646}
   - component: {fileID: 2340927819449980993}
   - component: {fileID: 3059818948045247767}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Head
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -142,7 +142,7 @@ GameObject:
   - component: {fileID: 5432393378122122217}
   - component: {fileID: 5269858729045122769}
   - component: {fileID: 3399593009723556002}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Gun
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -238,7 +238,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 395194760985199766}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Body Target
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -272,7 +272,7 @@ GameObject:
   - component: {fileID: 1901529555231917722}
   - component: {fileID: 7278762183938558876}
   - component: {fileID: 3551319838404500687}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Treads
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -373,7 +373,7 @@ GameObject:
   - component: {fileID: 954525600200445300}
   - component: {fileID: 1703492011546588684}
   - component: {fileID: 3233505066353482856}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Tank
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -464,6 +464,9 @@ MonoBehaviour:
   tankWeapon: {fileID: 457367011868354119}
   weaponTip: {fileID: 6819256228156088833}
   bodyTarget: {fileID: 395194760985199766}
+  aimNumberLayers: 10
+  aimRotationPrecision: 10
+  aimDegreesError: 5
 --- !u!114 &954525600200445300
 MonoBehaviour:
   m_ObjectHideFlags: 0

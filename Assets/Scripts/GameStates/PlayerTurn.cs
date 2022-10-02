@@ -64,7 +64,7 @@ namespace GameStates
                 {
                     if (targetUnit.playerIndex != playerIndex)
                     {
-                        selectedUnit.CalculateHitChance(targetUnit);
+                        Debug.Log(selectedUnit.CalculateHitChance(targetUnit));
                         return Action.Attack;
                     }
                 }
