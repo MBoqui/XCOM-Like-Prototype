@@ -37,6 +37,7 @@ namespace GridSystem
             GridElement endElement = grid.GetGridElement(endPosition);
 
             if (startElement == null || endElement == null) return null; //invalid query
+            if (endElement.IsBlocked()) return null;
 
             openList = new List<GridElement> { startElement };
             closedList = new List<GridElement>();
