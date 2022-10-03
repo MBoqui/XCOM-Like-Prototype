@@ -17,7 +17,7 @@ public class TreeManager : MonoBehaviour
 
     void Awake()
     {
-        if (Instance != null) Destroy(gameObject);
+        if (Instance != null) Destroy(this);
         Instance = this;
     }
 

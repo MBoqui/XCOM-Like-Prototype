@@ -23,7 +23,7 @@ namespace GameStates
         public override void Exit()
         {
             GameSetupMenu.Instance.Disable();
-            GameManager.Instance.NewGame();
+            GameManager.Instance.SetupMatch();
 
             machine.GoToNextTurn(0);
         }

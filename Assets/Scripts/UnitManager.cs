@@ -43,6 +43,7 @@ public class UnitManager : MonoBehaviour
     public void RemoveTank(Tank tank)
     {
         allTanks.Remove(tank);
+        CheckForWinner();
     }
 
 
@@ -55,6 +56,7 @@ public class UnitManager : MonoBehaviour
             tank.RefreshAP();
         }
     }
+
 
     bool TryAddTank(int playerIndex, Vector2Int gridPosition)
     {
@@ -71,11 +73,25 @@ public class UnitManager : MonoBehaviour
         return newUnit;
     }
 
+
     void ClearTanks()
     {
         foreach (Tank tank in allTanks)
         {
             Destroy(tank.gameObject);
         }
+    }
+
+
+    void CheckForWinner()
+    {
+        int lastPlayerIndex = allTanks[0].playerIndex;
+        foreach(Tank tank in allTanks)
+        {
+            if (lastPlayerIndex != tank.playerIndex) return;
+        }
+
+        //if all remaining tanks belong to the same player, end game
+        GameManager.Instance.DeclareWinner(lastPlayerIndex);
     }
 }

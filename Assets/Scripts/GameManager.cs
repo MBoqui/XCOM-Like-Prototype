@@ -23,7 +23,7 @@ public class GameManager : MonoBehaviour
 
     void Start()
     {
-        stateMachine.SetState(new GameSetup(stateMachine));
+        NewGame();
     }
 
     void Update()
@@ -40,10 +40,20 @@ public class GameManager : MonoBehaviour
 
     public void NewGame()
     {
+        stateMachine.SetState(new GameSetup(stateMachine));
+    }
+
+    public void SetupMatch()
+    {
         grid = new Grid(GameSettings.Instance.gridSize);
         stateMachine.grid = grid;
 
         UnitManager.Instance.InitializeNewArmies(grid);
         TreeManager.Instance.InitializeRandomTrees(grid);
+    }
+
+    public void DeclareWinner(int playerIndex)
+    {
+        stateMachine.SetState(new GameEnd(stateMachine, playerIndex));
     }
 }
