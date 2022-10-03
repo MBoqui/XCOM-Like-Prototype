@@ -50,6 +50,7 @@ public class GameManager : MonoBehaviour
 
         UnitManager.Instance.InitializeNewArmies(grid);
         TreeManager.Instance.InitializeRandomTrees(grid);
+        Ground.Instance.InitializeNewMap(grid);
     }
 
     public void DeclareWinner(int playerIndex)

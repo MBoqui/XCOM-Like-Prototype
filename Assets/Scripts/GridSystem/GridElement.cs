@@ -11,7 +11,7 @@ namespace GridSystem
         Grid grid;
         public Vector2Int gridPosition { get; private set; }
 
-        //TerrainType ...
+        TerrainType terrainType;
         GridObject gridObject;
 
         //Pathfinding
@@ -105,6 +105,23 @@ namespace GridSystem
             }
 
             return neighbourList;
+        }
+
+
+        public void SetTerrainType(TerrainType terrainType)
+        {
+            this.terrainType = terrainType;
+        }
+
+
+        public Color GetTerrainColor(bool primary = true)
+        {
+            if (primary)
+            {
+                return terrainType.color1;
+            } else {
+                return terrainType.color2;
+            }
         }
     }
 }
