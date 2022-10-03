@@ -11,6 +11,7 @@ public class Ground : MonoBehaviour
     new Transform transform;
     new Renderer renderer;
     Grid grid;
+    Vector2 perlinOffset;
 
     [SerializeField] TerrainType[] terrains;
 
@@ -28,6 +29,8 @@ public class Ground : MonoBehaviour
     public void InitializeNewMap(Grid grid)
     {
         this.grid = grid;
+        perlinOffset = new Vector2(Random.Range(-10000, 10000), Random.Range(-10000, 10000));
+
         SetupGround(grid.gridSize);
 
         for (int i = 0; i < grid.gridSize.x; i++)
@@ -44,14 +47,12 @@ public class Ground : MonoBehaviour
 
     void SetTerrainType(Vector2Int gridPosition)
     {
-        grid.GetGridElement(gridPosition).SetTerrainType(terrains[0]);
-
-        /*float chance = Random.value;
-
-        if (chance <= density)
+        for (int i = 1; i < terrains.Length; i++)
         {
-            TryAddTree(new Vector2Int(i, j));
-        }*/
+            if (TrySetTerrainType(i, gridPosition)) return;
+        }
+
+        grid.GetGridElement(gridPosition).SetTerrainType(terrains[0]);
     }
 
     void SetupGround(Vector2Int mapSize)
@@ -78,5 +79,22 @@ public class Ground : MonoBehaviour
         texture.Apply();
 
         return texture;
+    }
+
+    bool TrySetTerrainType(int terrainIndex, Vector2Int gridPosition)
+    {
+        Vector2 scale = terrains[terrainIndex].generationScale;
+        float perlinX = (float)gridPosition.x * terrainIndex * scale.x + perlinOffset.x;
+        float perlinY = (float)gridPosition.y * terrainIndex * scale.y + perlinOffset.y;
+
+        float sample = Mathf.PerlinNoise(perlinY, perlinX);
+
+        if (sample <= terrains[terrainIndex].generationCutoff)
+        {
+            grid.GetGridElement(gridPosition).SetTerrainType(terrains[terrainIndex]);
+            return true;
+        }
+
+        return false;
     }
 }

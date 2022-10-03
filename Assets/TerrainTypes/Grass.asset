@@ -13,6 +13,9 @@ MonoBehaviour:
   m_Name: Grass
   m_EditorClassIdentifier: 
   name: Grass
-  color: {r: 0, g: 0.8867924, b: 0.02514701, a: 1}
+  color1: {r: 0.14793964, g: 0.5754717, b: 0.12758099, a: 1}
+  color2: {r: 0.094166756, g: 0.3490566, b: 0.08397116, a: 1}
   isBlocked: 0
   pathCostIncrement: 0
+  generationCutoff: 0.5
+  generationScale: {x: 20, y: 20}

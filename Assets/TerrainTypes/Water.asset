@@ -13,6 +13,9 @@ MonoBehaviour:
   m_Name: Water
   m_EditorClassIdentifier: 
   name: Water
-  color: {r: 0, g: 0.15447187, b: 1, a: 1}
+  color1: {r: 0.080322154, g: 0.11111107, b: 0.8962264, a: 1}
+  color2: {r: 0.078431375, g: 0.10980393, b: 0.8980393, a: 1}
   isBlocked: 1
   pathCostIncrement: 0
+  generationCutoff: 0.2
+  generationScale: {x: 20, y: 100}

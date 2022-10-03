@@ -2891,8 +2891,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   terrains:
   - {fileID: 11400000, guid: b4988841d785c624987961002e2b2710, type: 2}
-  - {fileID: 11400000, guid: 897e64d477ef94248a7f7509b65f7c68, type: 2}
   - {fileID: 11400000, guid: da9ecd4d20ca4ea41b035821d41c751f, type: 2}
+  - {fileID: 11400000, guid: 897e64d477ef94248a7f7509b65f7c68, type: 2}
 --- !u!1 &963194225
 GameObject:
   m_ObjectHideFlags: 0

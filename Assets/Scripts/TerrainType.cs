@@ -11,4 +11,6 @@ public class TerrainType : ScriptableObject
     public Color color2;
     public bool isBlocked;
     public int pathCostIncrement;
+    public float generationCutoff = 0.5f;
+    public Vector2 generationScale = new Vector2(20,20);
 }

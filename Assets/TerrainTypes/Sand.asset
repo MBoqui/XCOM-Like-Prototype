@@ -13,6 +13,9 @@ MonoBehaviour:
   m_Name: Sand
   m_EditorClassIdentifier: 
   name: Sand
-  color: {r: 0.69848514, g: 0.7075472, b: 0.23028658, a: 1}
+  color1: {r: 0.7294118, g: 0.6154325, b: 0.15686274, a: 1}
+  color2: {r: 0.8773585, g: 0.75866276, b: 0.10346207, a: 1}
   isBlocked: 0
   pathCostIncrement: 1
+  generationCutoff: 0.3
+  generationScale: {x: 4, y: 4}
