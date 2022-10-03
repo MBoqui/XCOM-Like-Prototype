@@ -93,7 +93,9 @@ namespace GridSystem
         int CalculateTravelCost(GridElement fromElement, GridElement toElement)
         {
             //temporarily the same thing, change when there is cost difference between terrains
-            return CalculateHCost(fromElement.gridPosition, toElement.gridPosition);
+            int baseCost = CalculateHCost(fromElement.gridPosition, toElement.gridPosition);
+
+            return baseCost + fromElement.GetTerrainCost() + toElement.GetTerrainCost();
         }
 
 

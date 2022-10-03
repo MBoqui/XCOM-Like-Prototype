@@ -77,6 +77,7 @@ public class Ground : MonoBehaviour
             }
         }
 
+        texture.filterMode = FilterMode.Point;
         texture.Apply();
 
         return texture;

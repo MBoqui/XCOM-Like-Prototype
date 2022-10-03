@@ -17,5 +17,5 @@ MonoBehaviour:
   color2: {r: 0.078431375, g: 0.10980393, b: 0.8980393, a: 1}
   isBlocked: 1
   pathCostIncrement: 0
-  generationCutoff: 0.2
-  generationScale: {x: 20, y: 100}
+  generationCutoff: 0.25
+  generationScale: {x: 0.05, y: 0.1}

@@ -37,12 +37,19 @@ namespace GridSystem
 
         public bool IsBlocked()
         {
+            if (terrainType.isBlocked) return true;
             if (gridObject != null)
             {
                 if (gridObject.isBlocker) return true;
             }
 
             return false;
+        }
+
+
+        public int GetTerrainCost()
+        {
+            return terrainType.pathCostIncrement;
         }
 
 

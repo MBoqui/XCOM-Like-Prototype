@@ -18,4 +18,4 @@ MonoBehaviour:
   isBlocked: 0
   pathCostIncrement: 1
   generationCutoff: 0.3
-  generationScale: {x: 4, y: 4}
+  generationScale: {x: 0.08, y: 0.08}
