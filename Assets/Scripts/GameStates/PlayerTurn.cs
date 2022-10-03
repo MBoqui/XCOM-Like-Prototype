@@ -14,6 +14,7 @@ namespace GameStates
         Tank targetUnit;
         List<Vector2Int> path;
         int pathCost;
+        float hitChance;
         Action action;
 
         public PlayerTurn(int playerIndex, StateMachine machine) : base(machine)
@@ -25,6 +26,7 @@ namespace GameStates
         public override void Enter()
         {
             PlayerTurnMenu.Instance.Enable();
+            UnitManager.Instance.RefreshUnits(playerIndex);
         }
 
 
@@ -68,7 +70,7 @@ namespace GameStates
                 {
                     if (targetUnit.playerIndex != playerIndex)
                     {
-                        selectedUnit.CalculateHitChance(targetUnit);
+                        hitChance = selectedUnit.CalculateHitChance(targetUnit);
                         return Action.Attack;
                     }
                 }
@@ -94,7 +96,8 @@ namespace GameStates
 
         void ShowTips()
         {
-            PlayerTurnMenu.Instance.SetInfo(selectedUnit, targetUnit, pathCost);
+            if (targetUnit == null) hitChance = -1;
+            PlayerTurnMenu.Instance.SetInfo(selectedUnit, pathCost, hitChance);
         }
 
         void HandleCommand()
@@ -119,7 +122,7 @@ namespace GameStates
             if (selectedUnit == null) return;
             if (path == null) return;
 
-            selectedUnit.SetMovePath(path);
+            selectedUnit.SetMovePath(pathCost, path);
         }
 
         public enum Action {

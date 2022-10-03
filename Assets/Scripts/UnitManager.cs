@@ -48,6 +48,17 @@ public class UnitManager : MonoBehaviour
         allTanks.Remove(tank);
     }
 
+
+    public void RefreshUnits(int playerIndex)
+    {
+        foreach(Tank tank in allTanks)
+        {
+            if (tank.playerIndex != playerIndex) continue;
+
+            tank.RefreshAP();
+        }
+    }
+
     bool TryAddTank(int playerIndex, Vector2Int gridPosition)
     {
         GridObject newUnit = grid.TryAddObject(tankPrefab, gridPosition);

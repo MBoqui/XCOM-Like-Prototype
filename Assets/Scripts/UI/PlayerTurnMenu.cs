@@ -34,10 +34,11 @@ public class PlayerTurnMenu : MonoBehaviour
         gameObject.SetActive(true);
     }
 
-    public void SetInfo(Tank selectedUnit, Tank targetUnit, int pathCost)
+    public void SetInfo(Tank selectedUnit, int pathCost, float hitChance = -1)
     {
         UpdateStats (selectedUnit);
-        UpdateInstructions(selectedUnit, pathCost);
+
+        UpdateInstructions(selectedUnit, pathCost, hitChance);
     }
 
     void UpdateStats (Tank selectedUnit)
@@ -52,7 +53,7 @@ public class PlayerTurnMenu : MonoBehaviour
             "\nAP: " + selectedUnit.currentAP;
     }
 
-    void UpdateInstructions(Tank selectedUnit, int pathCost = 0)
+    void UpdateInstructions(Tank selectedUnit, int pathCost = 0, float hitChance = -1)
     {
         if (selectedUnit == null)
         {
@@ -60,7 +61,15 @@ public class PlayerTurnMenu : MonoBehaviour
             return;
         }
 
-        string text = "Click on one of your units to select it\nClick on an enemy unit to attack (45 AP)\nClick on an empty space to move";
+        string text = "Click on one of your units to select it" +
+            "\nClick on an enemy unit to attack (" + selectedUnit.weaponAPCost + " AP)";
+
+        if (hitChance >= 0)
+        {
+            text += " / chance to hit: " + Mathf.Round(hitChance * 100) + "%";
+        }
+
+        text += "\nClick on an empty space to move";
 
         if (pathCost != 0)
         {

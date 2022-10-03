@@ -15,6 +15,8 @@ public class Tank : Hittable
     [SerializeField] float aimDegreesError = 5;
 
     [SerializeField] Vector2Int weaponDamage = new Vector2Int(20, 40);
+    [SerializeField] int _weaponAPCost = 45;
+    public int weaponAPCost { get => _weaponAPCost; }
 
     [SerializeField] int maxAP = 100;
     public int currentAP { get; private set; }
@@ -28,6 +30,7 @@ public class Tank : Hittable
     {
         base.Awake();
         agent = GetComponent<GridAgent>();
+        RefreshAP();
     }
 
 
@@ -38,8 +41,9 @@ public class Tank : Hittable
     }
 
 
-    public void SetMovePath(List<Vector2Int> path)
+    public void SetMovePath(int pathCost, List<Vector2Int> path)
     {
+        if (!TrySpendAP(pathCost)) return; //unit dont have enough AP
         agent.SetMovePath(path);
     }
 
@@ -78,6 +82,8 @@ public class Tank : Hittable
 
     public void Attack(Tank target)
     {
+        if (!TrySpendAP(weaponAPCost)) return; //unit dont have enough AP
+
         float deviation = Random.Range(0f, aimDegreesError);
         float angle = Random.Range(0f, 360f);
 

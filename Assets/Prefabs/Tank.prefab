@@ -460,6 +460,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5b7293d903ddfef48809fb023b6acadc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  maxLife: 100
   tankHead: {fileID: 827647986171217266}
   tankWeapon: {fileID: 457367011868354119}
   weaponTip: {fileID: 6819256228156088833}
@@ -467,6 +468,9 @@ MonoBehaviour:
   aimNumberLayers: 10
   aimRotationPrecision: 10
   aimDegreesError: 5
+  weaponDamage: {x: 20, y: 40}
+  _weaponAPCost: 15
+  maxAP: 100
 --- !u!114 &954525600200445300
 MonoBehaviour:
   m_ObjectHideFlags: 0
