@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using GridSystem;
 
-public class Tank : MonoBehaviour
+public class Tank : Hittable
 {
     [SerializeField] Transform tankHead;
     [SerializeField] Transform tankWeapon;
@@ -14,13 +14,16 @@ public class Tank : MonoBehaviour
     [SerializeField] int aimRotationPrecision = 10;
     [SerializeField] float aimDegreesError = 5;
 
+    [SerializeField] Vector2Int weaponDamage = new Vector2Int(20, 40);
+
     public int playerIndex { get; private set; }
     public Vector2Int gridPosition { get => agent.gridPosition; }
     GridAgent agent;
 
 
-    void Awake()
+    new void Awake()
     {
+        base.Awake();
         agent = GetComponent<GridAgent>();
     }
 
@@ -52,12 +55,10 @@ public class Tank : MonoBehaviour
         {
             for (int j = 0; j < aimRotationPrecision; j++)
             {
-                Vector3 rayDirection = GetAimDirectionWithError(i * deviationStep, j * angleStep);
-                Ray ray = new Ray(weaponTip.position, rayDirection);
+                (bool hit, RaycastHit raycastHit) = RaycastWithAimError(i * deviationStep, j * angleStep, LayerMask.GetMask("Tank"));
 
-                Debug.DrawRay(weaponTip.position, rayDirection * 10);
-
-                if (!Physics.Raycast(ray, out RaycastHit raycastHit, Mathf.Infinity, LayerMask.GetMask("Tank"))) continue; //didnt hit anything
+                if (!hit) continue; //didnt hit anything
+                if (raycastHit.rigidbody == null) continue; //didnt hit anything destroyable
 
                 Tank hitTank = raycastHit.rigidbody.GetComponent<Tank>();
 
@@ -77,9 +78,21 @@ public class Tank : MonoBehaviour
         float deviation = Random.Range(0f, aimDegreesError);
         float angle = Random.Range(0f, 360f);
 
-        Debug.Log("Attack");
-    }
+        (bool hit, RaycastHit raycastHit) = RaycastWithAimError(deviation, angle, ~0);
 
+        if (!hit) return; //didnt hit anything
+        // raycastHit.point; //run hit effect
+
+        if (raycastHit.rigidbody == null) return; 
+
+        Hittable hittable = raycastHit.rigidbody.GetComponent<Hittable>();
+
+        if (hittable == null) return; //didnt hit anything destroyable
+
+        int damageAmount = Random.Range(weaponDamage.x, weaponDamage.y + 1);
+        hittable.TakeDamage(damageAmount);
+    }
+    
 
     Vector3 GetAimDirectionWithError(float deviation, float angle)
     {
@@ -89,6 +102,17 @@ public class Tank : MonoBehaviour
         aimVector = weaponTip.rotation * aimVector;
 
         return aimVector;
+    }
+
+
+    (bool, RaycastHit) RaycastWithAimError(float deviation, float angle, int layerMask)
+    {
+        Vector3 rayDirection = GetAimDirectionWithError(deviation, angle);
+        Ray ray = new Ray(weaponTip.position, rayDirection);
+
+        bool hit = Physics.Raycast(ray, out RaycastHit raycastHit, Mathf.Infinity, layerMask);
+
+        return (hit, raycastHit);
     }
 
 

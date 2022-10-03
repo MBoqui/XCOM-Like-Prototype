@@ -40,6 +40,7 @@ public class TreeManager : MonoBehaviour
         return newTree;
     }
 
+
     public GridObject TryAddTree(Vector2Int gridPosition)
     {
         GridObject newTree = grid.TryAddObject(prefab, gridPosition, true);
@@ -52,8 +53,11 @@ public class TreeManager : MonoBehaviour
         return newTree;
     }
 
-    //machine.tank = machine.grid.TryAddObject(machine.tankPrefab, Vector2Int.zero).GetComponent<GridAgent>();
 
+    public void RemoveTree (Tree tree)
+    {
+        allTrees.Remove(tree.GetComponent<GridObject>());
+    }
 
 
     public void GenerateRandomTrees()
