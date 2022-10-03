@@ -16,6 +16,9 @@ public class Tank : Hittable
 
     [SerializeField] Vector2Int weaponDamage = new Vector2Int(20, 40);
 
+    [SerializeField] int maxAP = 100;
+    public int currentAP { get; private set; }
+
     public int playerIndex { get; private set; }
     public Vector2Int gridPosition { get => agent.gridPosition; }
     GridAgent agent;
@@ -119,6 +122,21 @@ public class Tank : Hittable
     public Vector3 GetTargetPoint()
     {
         return bodyTarget.position;
+    }
+
+
+    public void RefreshAP()
+    {
+        currentAP = maxAP;
+    }
+
+
+    public bool TrySpendAP(int amount)
+    {
+        if (currentAP < amount) return false;
+
+        currentAP -= amount;
+        return true;
     }
 
 

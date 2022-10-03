@@ -94,7 +94,7 @@ namespace GameStates
 
         void ShowTips()
         {
-            PlayerTurnMenu.Instance.SetInfo(action, selectedUnit, targetUnit, pathCost);
+            PlayerTurnMenu.Instance.SetInfo(selectedUnit, targetUnit, pathCost);
         }
 
         void HandleCommand()
