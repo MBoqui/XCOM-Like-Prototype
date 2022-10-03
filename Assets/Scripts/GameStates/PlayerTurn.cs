@@ -13,6 +13,7 @@ namespace GameStates
         Tank selectedUnit;
         Tank targetUnit;
         List<Vector2Int> path;
+        int pathCost;
         Action action;
 
         public PlayerTurn(int playerIndex, StateMachine machine) : base(machine)
@@ -72,7 +73,7 @@ namespace GameStates
                     }
                 }
 
-                path = machine.grid.FindPath(selectedUnit.gridPosition, (Vector2Int)targetlocation);
+                (pathCost, path) = machine.grid.FindPath(selectedUnit.gridPosition, (Vector2Int)targetlocation);
                 return Action.Move;
             }
 
@@ -93,7 +94,7 @@ namespace GameStates
 
         void ShowTips()
         {
-            //show hit chance, path, ap spent on action
+            PlayerTurnMenu.Instance.SetInfo(action, selectedUnit, targetUnit, pathCost);
         }
 
         void HandleCommand()
@@ -121,7 +122,7 @@ namespace GameStates
             selectedUnit.SetMovePath(path);
         }
 
-        enum Action {
+        public enum Action {
             None,
             Select,
             Move,

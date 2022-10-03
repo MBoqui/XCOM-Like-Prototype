@@ -139,7 +139,7 @@ namespace GridSystem
         }
 
 
-        public List<Vector2Int> FindPath(Vector2Int startPosition, Vector2Int endPosition)
+        public (int, List<Vector2Int>) FindPath(Vector2Int startPosition, Vector2Int endPosition)
         {
             return pathFinder.FindPath(startPosition, endPosition);
         }

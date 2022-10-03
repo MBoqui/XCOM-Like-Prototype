@@ -21,7 +21,7 @@ namespace GridSystem
         }
 
 
-        protected internal List<Vector2Int> FindPath(Vector2Int startPosition, Vector2Int endPosition)
+        protected internal (int, List<Vector2Int>) FindPath(Vector2Int startPosition, Vector2Int endPosition)
         {
             //reset pathfinding values in all grid
             for (int i = 0; i < grid.gridSize.x; i++)
@@ -36,8 +36,8 @@ namespace GridSystem
             GridElement startElement = grid.GetGridElement(startPosition);
             GridElement endElement = grid.GetGridElement(endPosition);
 
-            if (startElement == null || endElement == null) return null; //invalid query
-            if (endElement.IsBlocked()) return null;
+            if (startElement == null || endElement == null) return (0, null); //invalid query
+            if (endElement.IsBlocked()) return (0, null);
 
             openList = new List<GridElement> { startElement };
             closedList = new List<GridElement>();
@@ -86,7 +86,7 @@ namespace GridSystem
                 }
             }
 
-            return null; //path not found
+            return (0, null); //path not found
         }
 
 
@@ -122,7 +122,7 @@ namespace GridSystem
         }
 
 
-        List<Vector2Int> CalculatePath(GridElement endElement)
+        (int, List<Vector2Int>) CalculatePath(GridElement endElement)
         {
             List<Vector2Int> path = new List<Vector2Int>();
             path.Add(endElement.gridPosition);
@@ -137,7 +137,7 @@ namespace GridSystem
 
             path.Reverse();
 
-            return path;
+            return (endElement.gCost, path);
         }
     }
 }
