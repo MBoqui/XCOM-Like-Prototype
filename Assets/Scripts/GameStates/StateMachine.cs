@@ -24,6 +24,11 @@ namespace GameStates
             currentState.Execute();
         }
 
+        public void Exit()
+        {
+            currentState.Exit();
+        }
+
 
         public void SetState(State newState)
         {

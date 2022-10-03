@@ -1,7 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using Grid = GridSystem.Grid;
+using UnityEngine.EventSystems;
 using GridSystem;
 
 namespace GameStates
@@ -23,18 +23,21 @@ namespace GameStates
 
         public override void Enter()
         {
-
+            PlayerTurnMenu.Instance.Enable();
         }
 
 
         public override void Exit()
         {
+            PlayerTurnMenu.Instance.Disable();
             machine.GoToNextTurn(playerIndex);
         }
 
 
         public override void Execute()
         {
+            if (EventSystem.current.IsPointerOverGameObject()) return;
+
             Vector3 worldMousePosition = Boqui.Utils.GetMouseWorldPosition();
 
             Vector2Int? targetlocation = machine.grid.GetGridPosition(worldMousePosition);
