@@ -16,15 +16,15 @@ namespace GameStates
 
         public override void Enter()
         {
-            UnitManager.Instance.GenerateArmies();
-            TreeManager.Instance.GenerateRandomTrees();
-
-            Exit();
+            GameSetupMenu.Instance.Enable();
         }
 
 
         public override void Exit()
         {
+            GameSetupMenu.Instance.Disable();
+            GameManager.Instance.NewGame();
+
             machine.GoToNextTurn(0);
         }
     }

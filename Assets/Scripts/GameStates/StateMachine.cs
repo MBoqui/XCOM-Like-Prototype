@@ -11,13 +11,6 @@ namespace GameStates
         State currentState;
 
         public Grid grid;
-        int numberPlayers;
-
-        public StateMachine(Grid grid, int numberPlayers)
-        {
-            this.grid = grid;
-            this.numberPlayers = numberPlayers;
-        }
 
         public void Execute()
         {
@@ -40,7 +33,7 @@ namespace GameStates
         {
             int nextTurnIndex = currentTurnIndex + 1;
 
-            if (nextTurnIndex > numberPlayers)
+            if (nextTurnIndex > GameSettings.Instance.numberPlayers)
             {
                 nextTurnIndex = 1;
             }

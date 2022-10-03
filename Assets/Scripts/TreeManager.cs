@@ -10,7 +10,6 @@ public class TreeManager : MonoBehaviour
     public static TreeManager Instance { get; private set; }
 
     [SerializeField] GameObject prefab;
-    [SerializeField, Range(0, 1)] float treeDensity = 0.2f;
     Grid grid;
 
     List<GridObject> allTrees = new List<GridObject> ();
@@ -20,11 +19,6 @@ public class TreeManager : MonoBehaviour
     {
         if (Instance != null) Destroy(gameObject);
         Instance = this;
-    }
-
-    public void Initiallize(Grid grid)
-    {
-        this.grid = grid;
     }
 
 
@@ -60,19 +54,33 @@ public class TreeManager : MonoBehaviour
     }
 
 
-    public void GenerateRandomTrees()
+    public void InitializeRandomTrees(Grid grid)
     {
+        this.grid = grid;
+
+        ClearTrees();
+
+        float density = GameSettings.Instance.treeDensity;
+
         for (int i = 0; i < grid.gridSize.x; i++)
         {
             for (int j = 0; j < grid.gridSize.y; j++)
             {
                 float chance = Random.value;
 
-                if (chance <= treeDensity)
+                if (chance <= density)
                 {
                     TryAddTree(new Vector2Int(i, j));
                 }
             }
+        }
+    }
+
+    void ClearTrees()
+    {
+        foreach (GridObject tree in allTrees)
+        {
+            tree.DestroySelf();
         }
     }
 }

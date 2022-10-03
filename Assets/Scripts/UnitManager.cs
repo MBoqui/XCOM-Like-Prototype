@@ -12,7 +12,6 @@ public class UnitManager : MonoBehaviour
     [SerializeField] GameObject tankPrefab;
     [SerializeField] int unitsPerPlayer = 6;
     Grid grid;
-    int numberPlayers;
     [SerializeField] Color[] playerColors;
 
     public List<Tank> allTanks = new List<Tank> ();
@@ -25,16 +24,13 @@ public class UnitManager : MonoBehaviour
     }
 
 
-    public void Initiallize(Grid grid, int numberPlayers)
+    public void InitializeNewArmies(Grid grid)
     {
         this.grid = grid;
-        this.numberPlayers = numberPlayers;
-    }
 
+        ClearTanks();
 
-    public void GenerateArmies()
-    {
-        for (int i = 0; i < numberPlayers; i++)
+        for (int i = 0; i < GameSettings.Instance.numberPlayers; i++)
         {
             for (int j = 0; j < unitsPerPlayer; j++)
             {
@@ -42,6 +38,7 @@ public class UnitManager : MonoBehaviour
             }
         }
     }
+
 
     public void RemoveTank(Tank tank)
     {
@@ -72,5 +69,13 @@ public class UnitManager : MonoBehaviour
         }
 
         return newUnit;
+    }
+
+    void ClearTanks()
+    {
+        foreach (Tank tank in allTanks)
+        {
+            Destroy(tank.gameObject);
+        }
     }
 }
