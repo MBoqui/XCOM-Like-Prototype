@@ -55,6 +55,7 @@ public class Ground : MonoBehaviour
         grid.GetGridElement(gridPosition).SetTerrainType(terrains[0]);
     }
 
+
     void SetupGround(Vector2Int mapSize)
     {
         transform.position = new Vector3(mapSize.x / 2f, 0, mapSize.y / 2f);
@@ -80,6 +81,7 @@ public class Ground : MonoBehaviour
 
         return texture;
     }
+
 
     bool TrySetTerrainType(int terrainIndex, Vector2Int gridPosition)
     {
