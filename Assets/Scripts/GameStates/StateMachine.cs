@@ -31,11 +31,19 @@ namespace GameStates
 
         public void GoToNextTurn(int currentTurnIndex)
         {
-            int nextTurnIndex = currentTurnIndex + 1;
+            int nextTurnIndex = currentTurnIndex;
+            bool isntValidIndex = true;
 
-            if (nextTurnIndex > GameSettings.Instance.numberPlayers)
+            while (isntValidIndex)
             {
-                nextTurnIndex = 1;
+                nextTurnIndex += 1;
+
+                if (nextTurnIndex > GameSettings.Instance.numberPlayers)
+                {
+                    nextTurnIndex = 1;
+                }
+
+                isntValidIndex = UnitManager.Instance.GetArmyEliminated(nextTurnIndex);
             }
 
             SetState(new PlayerTurn(nextTurnIndex, this));

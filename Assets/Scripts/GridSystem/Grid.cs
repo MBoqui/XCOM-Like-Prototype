@@ -147,7 +147,6 @@ namespace GridSystem
             {
                 //check if is valid answer
                 GridElement element = GetGridElement(current);
-                Debug.Log(current);
 
                 if (element != null) {
                     if (element.IsFree() && !element.IsBlocked())

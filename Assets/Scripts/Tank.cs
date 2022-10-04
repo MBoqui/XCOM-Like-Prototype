@@ -187,6 +187,8 @@ public class Tank : Hittable
         tankWeapon.GetComponent<Renderer>().material.color = newColor;
     }
 
+
+    //Coroutines
     IEnumerator PlayHitEffect(Vector3 position)
     {
         GameObject gameObject = Instantiate(hitEffect, position, Quaternion.identity);

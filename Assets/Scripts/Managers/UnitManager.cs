@@ -47,6 +47,7 @@ public class UnitManager : MonoBehaviour
     public void RemoveTank(Tank tank)
     {
         allTanks.Remove(tank);
+        CheckForEliminated(tank.playerIndex);
         CheckForWinner();
     }
 
@@ -79,6 +80,12 @@ public class UnitManager : MonoBehaviour
     }
 
 
+    public bool GetArmyEliminated(int playerindex)
+    {
+        return armies[playerindex - 1].isEliminated;
+    }
+
+
     //private Methods
     bool TryAddTank(Army army, Vector2Int gridPosition)
     {
@@ -107,13 +114,30 @@ public class UnitManager : MonoBehaviour
 
     void CheckForWinner()
     {
-        int lastPlayerIndex = allTanks[0].playerIndex;
-        foreach(Tank tank in allTanks)
+        int aliveCount = 0;
+        int winnerIndex = 0;
+        foreach(Army army in armies)
         {
-            if (lastPlayerIndex != tank.playerIndex) return;
+            if (!army.isEliminated)
+            {
+                winnerIndex = army.playerIndex;
+                aliveCount++;
+                if (aliveCount > 1) return;
+            }
         }
 
-        //if all remaining tanks belong to the same player, end game
-        GameManager.Instance.DeclareWinner(lastPlayerIndex);
+        //if only one player remain, end game
+        GameManager.Instance.DeclareWinner(winnerIndex);
+    }
+
+
+    void CheckForEliminated(int playerIndex)
+    {
+        foreach (Tank tank in allTanks)
+        {
+            if (playerIndex == tank.playerIndex) return;
+        }
+
+        armies[playerIndex - 1].SetEliminated();
     }
 }
