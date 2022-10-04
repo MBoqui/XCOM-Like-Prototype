@@ -26,8 +26,8 @@ public class GameSettings : MonoBehaviour
         this.numberPlayers = numberPlayers;
     }
 
-    public Color GetColor(int colorIndex)
+    public Color GetPlayerColor(int playerIndex)
     {
-        return playerColors[colorIndex];
+        return playerColors[playerIndex - 1];
     }
 }

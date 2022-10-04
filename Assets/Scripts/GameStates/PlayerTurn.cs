@@ -29,7 +29,7 @@ namespace GameStates
         //State Methods
         public override void Enter()
         {
-            PlayerTurnMenu.Instance.Enable();
+            PlayerTurnMenu.Instance.Enable(playerIndex);
             UnitManager.Instance.RefreshUnits(playerIndex);
         }
 

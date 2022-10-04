@@ -108,9 +108,9 @@ public class Tank : Hittable
 
         if (!hit) return; //didnt hit anything
 
-        Instantiate (hitEffect, raycastHit.point, Quaternion.identity); //run hit effect
+        StartCoroutine(PlayHitEffect(raycastHit.point)); //run hit effect
 
-        if (raycastHit.rigidbody == null) return; 
+        if (raycastHit.rigidbody == null) return;
 
         Hittable hittable = raycastHit.rigidbody.GetComponent<Hittable>();
 
@@ -185,5 +185,14 @@ public class Tank : Hittable
         gameObject.GetComponent<Renderer>().material.color = newColor;
         tankHead.GetComponent<Renderer>().material.color = newColor;
         tankWeapon.GetComponent<Renderer>().material.color = newColor;
+    }
+
+    IEnumerator PlayHitEffect(Vector3 position)
+    {
+        GameObject gameObject = Instantiate(hitEffect, position, Quaternion.identity);
+
+        yield return new WaitForSeconds(5);
+
+        Destroy(gameObject);
     }
 }

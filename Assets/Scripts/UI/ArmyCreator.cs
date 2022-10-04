@@ -20,7 +20,7 @@ public class ArmyCreator : MonoBehaviour
 
     public Army GetArmy()
     {
-        Color color = GameSettings.Instance.GetColor(playerIndex - 1);
+        Color color = GameSettings.Instance.GetPlayerColor(playerIndex);
         return new Army(playerIndex, color, int.Parse(numberTanks.text));
     }
 

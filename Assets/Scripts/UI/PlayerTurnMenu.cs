@@ -10,8 +10,11 @@ public class PlayerTurnMenu : MonoBehaviour
 
     [SerializeField] TextMeshProUGUI instructions;
     [SerializeField] TextMeshProUGUI stats;
+    [SerializeField] TextMeshProUGUI title;
 
-    private void Awake()
+
+    //Unity Messages
+    void Awake()
     {
         if (Instance != null) Destroy(gameObject);
         Instance = this;
@@ -19,20 +22,27 @@ public class PlayerTurnMenu : MonoBehaviour
         Disable();
     }
 
+
+    //public Methods
     public void EndTurn()
     {
         GameManager.Instance.ExitState();
     }
+
 
     public void Disable()
     {
         gameObject.SetActive(false);
     }
 
-    public void Enable()
+
+    public void Enable(int playerIndex)
     {
+        title.text = "Player " + playerIndex + " turn";
+        title.color = GameSettings.Instance.GetPlayerColor(playerIndex);
         gameObject.SetActive(true);
     }
+
 
     public void SetInfo(Tank selectedUnit, int pathCost, float hitChance = -1)
     {
@@ -41,6 +51,8 @@ public class PlayerTurnMenu : MonoBehaviour
         UpdateInstructions(selectedUnit, pathCost, hitChance);
     }
 
+
+    //private Methods
     void UpdateStats (Tank selectedUnit)
     {
         if (selectedUnit == null)
@@ -52,6 +64,7 @@ public class PlayerTurnMenu : MonoBehaviour
         stats.text = "Health: " + selectedUnit.currentLife +
             "\nAP: " + selectedUnit.currentAP;
     }
+
 
     void UpdateInstructions(Tank selectedUnit, int pathCost = 0, float hitChance = -1)
     {
