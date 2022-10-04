@@ -12,9 +12,12 @@ namespace GameStates
 
         Tank selectedUnit;
         Tank targetUnit;
+
         List<Vector2Int> path;
         int pathCost;
+
         float hitChance;
+
         Action action;
 
         public PlayerTurn(int playerIndex, StateMachine machine) : base(machine)
@@ -23,6 +26,7 @@ namespace GameStates
         }
 
 
+        //State Methods
         public override void Enter()
         {
             PlayerTurnMenu.Instance.Enable();
@@ -32,6 +36,7 @@ namespace GameStates
 
         public override void Exit()
         {
+            if (IsUnitBusy()) return;
             PlayerTurnMenu.Instance.Disable();
             machine.GoToNextTurn(playerIndex);
         }
@@ -39,6 +44,7 @@ namespace GameStates
 
         public override void Execute()
         {
+            if (IsUnitBusy()) return;
             if (EventSystem.current.IsPointerOverGameObject()) return;
 
             Vector3 worldMousePosition = Boqui.Utils.GetMouseWorldPosition();
@@ -53,6 +59,7 @@ namespace GameStates
         }
 
 
+        //private Methods
         Action ComputeAction(Vector2Int? targetlocation)
         {
             if (targetlocation == null) return Action.None;
@@ -82,6 +89,7 @@ namespace GameStates
             return Action.None;
         }
 
+
         Tank GetUnitAt(Vector2Int targetlocation)
         {
             GridElement element = machine.grid.GetGridElement(targetlocation);
@@ -100,6 +108,7 @@ namespace GameStates
             PlayerTurnMenu.Instance.SetInfo(selectedUnit, pathCost, hitChance);
         }
 
+
         void HandleCommand()
         {
             if (!Input.GetMouseButtonDown(0)) return;
@@ -117,6 +126,7 @@ namespace GameStates
             }
         }
 
+
         void TryMove()
         {
             if (selectedUnit == null) return;
@@ -125,6 +135,19 @@ namespace GameStates
             selectedUnit.SetMovePath(pathCost, path);
         }
 
+
+        bool IsUnitBusy()
+        {
+            if (selectedUnit != null)
+            {
+                if (selectedUnit.IsBusy()) return true;
+            }
+
+            return false;
+        }
+
+
+        //Enums
         public enum Action {
             None,
             Select,

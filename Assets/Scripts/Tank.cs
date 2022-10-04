@@ -5,27 +5,33 @@ using GridSystem;
 
 public class Tank : Hittable
 {
+    //Tank parts
     [SerializeField] Transform tankHead;
     [SerializeField] Transform tankWeapon;
     [SerializeField] Transform weaponTip;
     [SerializeField] Transform bodyTarget;
 
+    //aim info
     [SerializeField] int aimNumberLayers = 10;
     [SerializeField] int aimRotationPrecision = 10;
     [SerializeField] float aimDegreesError = 5;
 
+    //weapon info
     [SerializeField] Vector2Int weaponDamage = new Vector2Int(20, 40);
     [SerializeField] int _weaponAPCost = 45;
     public int weaponAPCost { get => _weaponAPCost; }
 
+    //AP info
     [SerializeField] int maxAP = 100;
     public int currentAP { get; private set; }
 
+    //script info
     public int playerIndex { get; private set; }
     public Vector2Int gridPosition { get => agent.gridPosition; }
     GridAgent agent;
 
 
+    //Unity Messages
     new void Awake()
     {
         base.Awake();
@@ -34,6 +40,13 @@ public class Tank : Hittable
     }
 
 
+    void OnDestroy()
+    {
+        UnitManager.Instance.RemoveTank(this);
+    }
+
+
+    //public Methods
     public void Initialize(int playerIndex, Color playerColor)
     {
         this.playerIndex = playerIndex;
@@ -103,6 +116,34 @@ public class Tank : Hittable
     }
     
 
+    public Vector3 GetTargetPoint()
+    {
+        return bodyTarget.position;
+    }
+
+
+    public void RefreshAP()
+    {
+        currentAP = maxAP;
+    }
+
+
+    public bool TrySpendAP(int amount)
+    {
+        if (currentAP < amount) return false;
+
+        currentAP -= amount;
+        return true;
+    }
+
+
+    public bool IsBusy()
+    {
+        return agent.IsBusy();
+    }
+
+
+    //private Methods
     Vector3 GetAimDirectionWithError(float deviation, float angle)
     {
         Vector3 aimVector = Vector3.forward;
@@ -125,27 +166,6 @@ public class Tank : Hittable
     }
 
 
-    public Vector3 GetTargetPoint()
-    {
-        return bodyTarget.position;
-    }
-
-
-    public void RefreshAP()
-    {
-        currentAP = maxAP;
-    }
-
-
-    public bool TrySpendAP(int amount)
-    {
-        if (currentAP < amount) return false;
-
-        currentAP -= amount;
-        return true;
-    }
-
-
     void AimAt(Vector3 target)
     {
         Vector3 headTurnDirection = new Vector3(target.x, 0, target.z);
@@ -160,11 +180,5 @@ public class Tank : Hittable
         gameObject.GetComponent<Renderer>().material.color = newColor;
         tankHead.GetComponent<Renderer>().material.color = newColor;
         tankWeapon.GetComponent<Renderer>().material.color = newColor;
-    }
-
-
-    void OnDestroy()
-    {
-        UnitManager.Instance.RemoveTank(this);
     }
 }

@@ -22,8 +22,10 @@ namespace GridSystem
         int currentPathIndex;
         Vector3 moveTargetPosition;
         bool isRotating;
+        bool isMoving;
 
 
+        //Unity Messages
         void Awake()
         {
             transform = GetComponent<Transform>();
@@ -44,6 +46,30 @@ namespace GridSystem
         }
 
 
+        //public Methods
+        public void SetMovePath(List<Vector2Int> path)
+        {
+            movePath.Clear();
+            currentPathIndex = 0;
+            foreach(Vector2Int gridPosition in path)
+            {
+                Vector3? worldPosition = grid.GetWorldPosition(gridPosition);
+
+                if (worldPosition == null) continue;
+
+                movePath.Add((Vector3)worldPosition);
+            }
+            movePath.RemoveAt(0);
+        }
+
+
+        public bool IsBusy()
+        {
+            return isMoving || isRotating;
+        }
+
+
+        //private Methods
         void HandleRotation()
         {
             if (movePath.Count <= 0) return;
@@ -68,7 +94,14 @@ namespace GridSystem
 
         void HandleMovement()
         {
-            if (movePath.Count <= 0) return;
+            if (movePath.Count <= 0)
+            {
+                isMoving = false;
+                return;
+            } else {
+                isMoving = true;
+            }
+
             if (isRotating) return;
 
             moveTargetPosition = movePath[currentPathIndex];
@@ -78,7 +111,9 @@ namespace GridSystem
                 Vector3 moveDirection = (moveTargetPosition - transform.position).normalized;
 
                 transform.position += moveDirection * moveSpeed * Time.deltaTime;
-            } else {
+            }
+            else
+            {
                 currentPathIndex++;
                 if (currentPathIndex >= movePath.Count)
                 {
@@ -90,22 +125,6 @@ namespace GridSystem
                     movePath.Clear();
                 }
             }
-        }
-
-
-        public void SetMovePath(List<Vector2Int> path)
-        {
-            movePath.Clear();
-            currentPathIndex = 0;
-            foreach(Vector2Int gridPosition in path)
-            {
-                Vector3? worldPosition = grid.GetWorldPosition(gridPosition);
-
-                if (worldPosition == null) continue;
-
-                movePath.Add((Vector3)worldPosition);
-            }
-            movePath.RemoveAt(0);
         }
 
 
