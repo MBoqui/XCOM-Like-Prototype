@@ -12,6 +12,8 @@ public class UnitManager : MonoBehaviour
     [SerializeField] GameObject tankPrefab;
     Grid grid;
 
+    new Transform transform;
+
     public List<Tank> allTanks = new List<Tank> ();
     Army[] armies;
 
@@ -21,6 +23,8 @@ public class UnitManager : MonoBehaviour
     {
         if (Instance != null) Destroy(gameObject);
         Instance = this;
+
+        transform = GetComponent<Transform>();
     }
 
 
@@ -89,7 +93,7 @@ public class UnitManager : MonoBehaviour
     //private Methods
     bool TryAddTank(Army army, Vector2Int gridPosition)
     {
-        GridObject newUnit = grid.TryAddObject(tankPrefab, gridPosition);
+        GridObject newUnit = grid.TryAddObject(tankPrefab, gridPosition, transform);
 
         if (newUnit != null)
         {

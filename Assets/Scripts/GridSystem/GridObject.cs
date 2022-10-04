@@ -21,7 +21,7 @@ namespace GridSystem
 
 
         //public Methods
-        public static GridObject Create(Grid grid, GameObject prefab, GridElement targetElement, bool isBlocker, bool randomizeTransform = false)
+        public static GridObject Create(Grid grid, GameObject prefab, GridElement targetElement, Transform parent, bool isBlocker, bool randomizeTransform = false)
         {
             //get position and rotation to instantiate
             Vector3 worldPosition = (Vector3)grid.GetWorldPosition(targetElement.gridPosition);
@@ -34,7 +34,7 @@ namespace GridSystem
             }
 
             //instantiate prefab
-            GameObject gridObjectGameObject = Instantiate(prefab, worldPosition, rotation);
+            GameObject gridObjectGameObject = Instantiate(prefab, worldPosition, rotation, parent);
 
             //setup component
             GridObject gridObject = gridObjectGameObject.AddComponent<GridObject>();

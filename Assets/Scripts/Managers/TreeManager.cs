@@ -12,6 +12,8 @@ public class TreeManager : MonoBehaviour
     [SerializeField] GameObject[] prefabs;
     Grid grid;
 
+    new Transform transform;
+
     List<GridObject> allTrees = new List<GridObject> ();
 
 
@@ -20,6 +22,8 @@ public class TreeManager : MonoBehaviour
     {
         if (Instance != null) Destroy(this);
         Instance = this;
+
+        transform = GetComponent<Transform>();
     }
 
 
@@ -27,7 +31,7 @@ public class TreeManager : MonoBehaviour
     public GridObject TryAddTree(Vector2Int gridPosition)
     {
         int treeIndex = Random.Range(0, prefabs.Length);
-        GridObject newTree = grid.TryAddObject(prefabs[treeIndex], gridPosition, true, true);
+        GridObject newTree = grid.TryAddObject(prefabs[treeIndex], gridPosition, transform, true, true);
 
         if (newTree != null)
         {
