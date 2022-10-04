@@ -10,12 +10,15 @@ public class Army
 
     public bool isEliminated { get; private set; }
 
+
+    //public Methods
     public Army (int playerIndex, Color color, int numberTanks)
     {
         this.playerIndex = playerIndex;
         this.color = color;
         this.numberTanks = numberTanks;
     }
+
 
     public void SetEliminated()
     {

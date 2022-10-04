@@ -22,6 +22,7 @@ namespace GridSystem
         public GridAgent agent;
 
 
+        //Constructor
         public GridElement(Grid grid, Vector2Int gridPosition)
         {
             this.grid = grid;
@@ -29,21 +30,11 @@ namespace GridSystem
         }
 
 
+        //public Methods
+        //general setters & getters
         public bool IsFree()
         {
             return gridObject == null;
-        }
-
-
-        public bool IsBlocked()
-        {
-            if (terrainType.isBlocked) return true;
-            if (gridObject != null)
-            {
-                if (gridObject.isBlocker) return true;
-            }
-
-            return false;
         }
 
 
@@ -74,9 +65,35 @@ namespace GridSystem
         }
 
 
-        public void DestroyGridObject()
+        public void SetTerrainType(TerrainType terrainType)
         {
-            gridObject.DestroySelf();
+            this.terrainType = terrainType;
+        }
+
+
+        public Color GetTerrainColor(bool primary = true)
+        {
+            if (primary)
+            {
+                return terrainType.color1;
+            }
+            else
+            {
+                return terrainType.color2;
+            }
+        }
+
+
+        //pathfinding
+        public bool IsBlocked()
+        {
+            if (terrainType.isBlocked) return true;
+            if (gridObject != null)
+            {
+                if (gridObject.isBlocker) return true;
+            }
+
+            return false;
         }
 
 
@@ -112,23 +129,6 @@ namespace GridSystem
             }
 
             return neighbourList;
-        }
-
-
-        public void SetTerrainType(TerrainType terrainType)
-        {
-            this.terrainType = terrainType;
-        }
-
-
-        public Color GetTerrainColor(bool primary = true)
-        {
-            if (primary)
-            {
-                return terrainType.color1;
-            } else {
-                return terrainType.color2;
-            }
         }
     }
 }

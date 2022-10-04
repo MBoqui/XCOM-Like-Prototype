@@ -13,18 +13,22 @@ public class GameSettings : MonoBehaviour
     [SerializeField] Color[] playerColors;
 
 
+    //Unity Messages
     void Awake()
     {
         if (Instance != null) Destroy(this);
         Instance = this;
     }
 
+
+    //public Methods
     public void WriteValues(Vector2Int gridSize, float treeDensity, int numberPlayers)
     {
         this.gridSize = gridSize;
         this.treeDensity = treeDensity;
         this.numberPlayers = numberPlayers;
     }
+
 
     public Color GetPlayerColor(int playerIndex)
     {

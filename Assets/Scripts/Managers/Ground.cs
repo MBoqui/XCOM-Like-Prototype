@@ -16,6 +16,7 @@ public class Ground : MonoBehaviour
     [SerializeField] TerrainType[] terrains;
 
 
+    //Unity Messages
     void Awake()
     {
         if (Instance != null) Destroy(this);
@@ -26,6 +27,7 @@ public class Ground : MonoBehaviour
     }
 
 
+    //public Methods
     public void InitializeNewMap(Grid grid)
     {
         this.grid = grid;
@@ -45,6 +47,7 @@ public class Ground : MonoBehaviour
     }
 
 
+    //private Methods
     void SetTerrainType(Vector2Int gridPosition)
     {
         for (int i = 1; i < terrains.Length; i++)

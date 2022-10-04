@@ -15,6 +15,7 @@ public class TreeManager : MonoBehaviour
     List<GridObject> allTrees = new List<GridObject> ();
 
 
+    //Unity Messages
     void Awake()
     {
         if (Instance != null) Destroy(this);
@@ -22,19 +23,7 @@ public class TreeManager : MonoBehaviour
     }
 
 
-    public GridObject TryAddTree(Vector3 worldPosition)
-    {
-        GridObject newTree = grid.TryAddObject(prefab, worldPosition, true);
-
-        if (newTree != null)
-        {
-            allTrees.Add(newTree);
-        }
-
-        return newTree;
-    }
-
-
+    //public Methods
     public GridObject TryAddTree(Vector2Int gridPosition)
     {
         GridObject newTree = grid.TryAddObject(prefab, gridPosition, true);
@@ -76,6 +65,8 @@ public class TreeManager : MonoBehaviour
         }
     }
 
+
+    //private Methods
     void ClearTrees()
     {
         foreach (GridObject tree in allTrees)

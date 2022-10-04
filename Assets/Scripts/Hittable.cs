@@ -8,11 +8,15 @@ public class Hittable : MonoBehaviour
 
     public int currentLife { get; private set; }
 
+
+    //Unity Messages
     protected void Awake()
     {
         currentLife = maxLife;
     }
 
+
+    //public Methods
     public void TakeDamage(int amount)
     {
         currentLife -= amount;
@@ -23,6 +27,8 @@ public class Hittable : MonoBehaviour
         }
     }
 
+
+    //Coroutines
     IEnumerator Die()
     {
         while (transform.localScale.x > 0.05f)

@@ -10,6 +10,8 @@ public class GameEndScreen : MonoBehaviour
 
     [SerializeField] TextMeshProUGUI winnerText;
 
+
+    //Unity Messages
     private void Awake()
     {
         if (Instance != null) Destroy(this);
@@ -18,6 +20,8 @@ public class GameEndScreen : MonoBehaviour
         Disable();
     }
 
+
+    //public Methods
     public void NewGame()
     {
         GameManager.Instance.ExitState();
