@@ -107,7 +107,8 @@ public class Tank : Hittable
         (bool hit, RaycastHit raycastHit) = RaycastWithAimError(deviation, angle, ~0);
 
         if (!hit) return; //didnt hit anything
-        // raycastHit.point; //run hit effect
+
+        Instantiate (hitEffect, raycastHit.point, Quaternion.identity); //run hit effect
 
         if (raycastHit.rigidbody == null) return; 
 
