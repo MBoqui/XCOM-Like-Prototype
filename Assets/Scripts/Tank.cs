@@ -20,6 +20,7 @@ public class Tank : Hittable
     [SerializeField] Vector2Int weaponDamage = new Vector2Int(20, 40);
     [SerializeField] int _weaponAPCost = 45;
     [SerializeField] ParticleSystem muzzleEffect;
+    [SerializeField] AudioSource cannonAudio;
     [SerializeField] GameObject hitEffect;
     public int weaponAPCost { get => _weaponAPCost; }
 
@@ -100,6 +101,7 @@ public class Tank : Hittable
         if (!TrySpendAP(weaponAPCost)) return; //unit dont have enough AP
 
         muzzleEffect.Play();
+        cannonAudio.Play();
 
         float deviation = Random.Range(0f, aimDegreesError);
         float angle = Random.Range(0f, 360f);
