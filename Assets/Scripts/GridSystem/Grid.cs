@@ -89,7 +89,7 @@ namespace GridSystem
 
 
         //content related
-        public GridObject TryAddObject(GameObject prefab, Vector2Int gridPosition, bool isObstacle = false)
+        public GridObject TryAddObject(GameObject prefab, Vector2Int gridPosition, bool isObstacle = false, bool randomizeTransform = false)
         {
             GridElement element = GetGridElement(gridPosition);
 
@@ -98,22 +98,13 @@ namespace GridSystem
             if (!element.IsFree()) return null;
 
             //create object and set it to element
-            GridObject newGridObject = GridObject.Create(this, prefab, element, isObstacle);
+            GridObject newGridObject = GridObject.Create(this, prefab, element, isObstacle, randomizeTransform);
 
             if (newGridObject == null) return null;
 
             element.SetGridObject(newGridObject);
 
             return newGridObject;
-        }
-
-
-        public GridObject TryAddObject(GameObject prefab, Vector3 worldPosition, bool isObstacle = false)
-        {
-            Vector2Int? gridPosition = GetGridPosition(worldPosition);
-            if (gridPosition == null) return null;
-
-            return TryAddObject(prefab, (Vector2Int)gridPosition, isObstacle);
         }
 
 

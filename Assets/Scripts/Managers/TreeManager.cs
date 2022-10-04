@@ -9,7 +9,7 @@ public class TreeManager : MonoBehaviour
 {
     public static TreeManager Instance { get; private set; }
 
-    [SerializeField] GameObject prefab;
+    [SerializeField] GameObject[] prefabs;
     Grid grid;
 
     List<GridObject> allTrees = new List<GridObject> ();
@@ -26,7 +26,8 @@ public class TreeManager : MonoBehaviour
     //public Methods
     public GridObject TryAddTree(Vector2Int gridPosition)
     {
-        GridObject newTree = grid.TryAddObject(prefab, gridPosition, true);
+        int treeIndex = Random.Range(0, prefabs.Length);
+        GridObject newTree = grid.TryAddObject(prefabs[treeIndex], gridPosition, true, true);
 
         if (newTree != null)
         {

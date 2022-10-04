@@ -13,13 +13,28 @@ namespace GridSystem
         GridElement element;
 
 
-        public static GridObject Create(Grid grid, GameObject prefab, GridElement targetElement, bool isBlocker)
+        //Unity Messages
+        void OnDestroy()
         {
-            //check if object can be built in grid
+            element.ClearGridObject();
+        }
+
+
+        //public Methods
+        public static GridObject Create(Grid grid, GameObject prefab, GridElement targetElement, bool isBlocker, bool randomizeTransform = false)
+        {
+            //get position and rotation to instantiate
             Vector3 worldPosition = (Vector3)grid.GetWorldPosition(targetElement.gridPosition);
+            Quaternion rotation = Quaternion.identity;
+
+            if (randomizeTransform)
+            {
+                worldPosition += new Vector3(Random.value / 4, 0, Random.value / 4);
+                rotation *= Quaternion.AngleAxis(Random.Range(0f, 360f), Vector3.up);
+            }
 
             //instantiate prefab
-            GameObject gridObjectGameObject = Instantiate(prefab, worldPosition, Quaternion.identity);
+            GameObject gridObjectGameObject = Instantiate(prefab, worldPosition, rotation);
 
             //setup component
             GridObject gridObject = gridObjectGameObject.AddComponent<GridObject>();
@@ -44,11 +59,6 @@ namespace GridSystem
         public void DestroySelf()
         {
             Destroy(gameObject);
-        }
-
-        void OnDestroy()
-        {
-            element.ClearGridObject();
         }
     }
 }
