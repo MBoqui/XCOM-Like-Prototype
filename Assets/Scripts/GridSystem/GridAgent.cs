@@ -46,6 +46,8 @@ namespace GridSystem
 
         void HandleRotation()
         {
+            if (movePath.Count <= 0) return;
+
             Vector3 targetDirection = moveTargetPosition - transform.position;
             Vector3 currentDirection = transform.forward;
 
