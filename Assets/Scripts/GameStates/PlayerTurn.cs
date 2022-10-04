@@ -31,6 +31,9 @@ namespace GameStates
         {
             PlayerTurnMenu.Instance.Enable(playerIndex);
             UnitManager.Instance.RefreshUnits(playerIndex);
+
+            Vector2Int cameraPosition = UnitManager.Instance.GetPlayerFristUnitPosition(playerIndex);
+            CameraController.Instance.JumpTo(new Vector3(cameraPosition.x, 0, cameraPosition.y));
         }
 
 

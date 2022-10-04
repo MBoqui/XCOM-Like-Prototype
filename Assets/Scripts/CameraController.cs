@@ -5,6 +5,8 @@ using UnityEngine;
 
 public class CameraController : MonoBehaviour
 {
+    public static CameraController Instance { get; private set; }
+
     [SerializeField] float moveSpeed = 5;
     [SerializeField] float zOffset = 8;
     Vector3 moveDirection;
@@ -15,6 +17,9 @@ public class CameraController : MonoBehaviour
     //Unity Messages
     void Awake()
     {
+        if (Instance != null) Destroy(this);
+        Instance = this;
+
         transform = GetComponent<Transform>();
     }
 
@@ -24,6 +29,13 @@ public class CameraController : MonoBehaviour
         HandleInput();
 
         MoveCamera();
+    }
+
+
+    //public Methods
+    public void JumpTo(Vector3 position)
+    {
+        transform.position = position + new Vector3(0, transform.position.y, -zOffset);
     }
 
 
@@ -69,6 +81,6 @@ public class CameraController : MonoBehaviour
             xMove += 1;
         }
 
-        moveDirection = new Vector3(xMove, 0, zMove) * moveSpeed;
+        moveDirection = new Vector3(xMove, 0, zMove).normalized * moveSpeed;
     }
 }

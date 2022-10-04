@@ -68,6 +68,17 @@ public class UnitManager : MonoBehaviour
     }
 
 
+    public Vector2Int GetPlayerFristUnitPosition(int playerIndex)
+    {
+        foreach (Tank tank in allTanks)
+        {
+            if (tank.playerIndex == playerIndex) return tank.gridPosition;
+        }
+
+        return Vector2Int.zero;
+    }
+
+
     //private Methods
     bool TryAddTank(Army army, Vector2Int gridPosition)
     {
