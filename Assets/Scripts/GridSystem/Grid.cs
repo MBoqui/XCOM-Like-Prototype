@@ -96,6 +96,7 @@ namespace GridSystem
             //if grid element not valid return false
             if (element == null) return null;
             if (!element.IsFree()) return null;
+            if (element.IsBlocked()) return null;
 
             //create object and set it to element
             GridObject newGridObject = GridObject.Create(this, prefab, element, parent, isObstacle, randomizeTransform);

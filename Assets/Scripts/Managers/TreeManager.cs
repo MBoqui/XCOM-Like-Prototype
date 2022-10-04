@@ -28,20 +28,6 @@ public class TreeManager : MonoBehaviour
 
 
     //public Methods
-    public GridObject TryAddTree(Vector2Int gridPosition)
-    {
-        int treeIndex = Random.Range(0, prefabs.Length);
-        GridObject newTree = grid.TryAddObject(prefabs[treeIndex], gridPosition, transform, true, true);
-
-        if (newTree != null)
-        {
-            allTrees.Add(newTree);
-        }
-
-        return newTree;
-    }
-
-
     public void RemoveTree (Tree tree)
     {
         allTrees.Remove(tree.GetComponent<GridObject>());
@@ -72,6 +58,20 @@ public class TreeManager : MonoBehaviour
 
 
     //private Methods
+    GridObject TryAddTree(Vector2Int gridPosition)
+    {
+        int treeIndex = Random.Range(0, prefabs.Length);
+        GridObject newTree = grid.TryAddObject(prefabs[treeIndex], gridPosition, transform, true, true);
+
+        if (newTree != null)
+        {
+            allTrees.Add(newTree);
+        }
+
+        return newTree;
+    }
+
+
     void ClearTrees()
     {
         foreach (GridObject tree in allTrees)
