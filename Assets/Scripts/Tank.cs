@@ -78,7 +78,7 @@ public class Tank : Hittable
         {
             for (int j = 0; j < aimRotationPrecision; j++)
             {
-                (bool hit, RaycastHit raycastHit) = RaycastWithAimError(i * deviationStep, j * angleStep, LayerMask.GetMask("Tank"));
+                (bool hit, RaycastHit raycastHit) = RaycastWithAimError(i * deviationStep, j * angleStep);
 
                 if (!hit) continue; //didnt hit anything
                 if (raycastHit.rigidbody == null) continue; //didnt hit anything destroyable
@@ -106,7 +106,7 @@ public class Tank : Hittable
         float deviation = Random.Range(0f, aimDegreesError);
         float angle = Random.Range(0f, 360f);
 
-        (bool hit, RaycastHit raycastHit) = RaycastWithAimError(deviation, angle, ~0);
+        (bool hit, RaycastHit raycastHit) = RaycastWithAimError(deviation, angle);
 
         if (!hit) return; //didnt hit anything
 
@@ -162,12 +162,12 @@ public class Tank : Hittable
     }
 
 
-    (bool, RaycastHit) RaycastWithAimError(float deviation, float angle, int layerMask)
+    (bool, RaycastHit) RaycastWithAimError(float deviation, float angle)
     {
         Vector3 rayDirection = GetAimDirectionWithError(deviation, angle);
         Ray ray = new Ray(weaponTip.position, rayDirection);
 
-        bool hit = Physics.Raycast(ray, out RaycastHit raycastHit, Mathf.Infinity, layerMask);
+        bool hit = Physics.Raycast(ray, out RaycastHit raycastHit, Mathf.Infinity);
 
         return (hit, raycastHit);
     }
