@@ -6,11 +6,13 @@ using UnityEngine;
 public class CameraController : MonoBehaviour
 {
     [SerializeField] float moveSpeed = 5;
+    [SerializeField] float zOffset = 8;
     Vector3 moveDirection;
 
     new Transform transform;
 
 
+    //Unity Messages
     void Awake()
     {
         transform = GetComponent<Transform>();
@@ -25,9 +27,20 @@ public class CameraController : MonoBehaviour
     }
 
 
+    //private Methods
     void MoveCamera()
     {
-        transform.position += moveDirection * Time.deltaTime;
+        Vector3 position = transform.position;
+        Vector2Int gridSize = GameSettings.Instance.gridSize;
+
+        Vector3 newPosition = position + moveDirection * Time.deltaTime;
+
+        if (newPosition.x < 0 ||
+            newPosition.z < - zOffset ||
+            newPosition.x >= gridSize.x ||
+            newPosition.z >= gridSize.y - zOffset) return;
+
+        transform.position = newPosition;
     }
 
 
