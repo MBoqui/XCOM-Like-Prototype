@@ -16,6 +16,7 @@ public class UnitManager : MonoBehaviour
     Army[] armies;
 
 
+    //unity Messages
     void Awake()
     {
         if (Instance != null) Destroy(gameObject);
@@ -23,6 +24,7 @@ public class UnitManager : MonoBehaviour
     }
 
 
+    //public Methods
     public void InitializeNewArmies(Grid grid)
     {
         this.grid = grid;
@@ -31,9 +33,12 @@ public class UnitManager : MonoBehaviour
 
         for (int i = 0; i < armies.Length; i++)
         {
+            Vector2Int centerSpawn = grid.GetRandomPosition();
+
             for (int j = 0; j < armies[i].numberTanks; j++)
             {
-                TryAddTank(armies[i], new Vector2Int(i, j));
+                Vector2Int position = grid.FindAvailablePositionAround(centerSpawn);
+                TryAddTank(armies[i], position);
             }
         }
     }
@@ -56,12 +61,14 @@ public class UnitManager : MonoBehaviour
         }
     }
 
+
     public void SetArmies(Army[] armies)
     {
         this.armies = armies;
     }
 
 
+    //private Methods
     bool TryAddTank(Army army, Vector2Int gridPosition)
     {
         GridObject newUnit = grid.TryAddObject(tankPrefab, gridPosition);

@@ -12,6 +12,8 @@ public class GameManager : MonoBehaviour
     Grid grid;
     StateMachine stateMachine;
 
+
+    //Unity Messages
     void Awake()
     {
         if (Instance != null) Destroy(this);
@@ -26,6 +28,7 @@ public class GameManager : MonoBehaviour
         NewGame();
     }
 
+
     void Update()
     {
         if (stateMachine == null) return;
@@ -33,25 +36,30 @@ public class GameManager : MonoBehaviour
         stateMachine.Execute();
     }
 
+
+    //public Methods
     public void ExitState()
     {
         stateMachine.Exit();
     }
+
 
     public void NewGame()
     {
         stateMachine.SetState(new GameSetup(stateMachine));
     }
 
+
     public void SetupMatch()
     {
         grid = new Grid(GameSettings.Instance.gridSize);
         stateMachine.grid = grid;
 
-        UnitManager.Instance.InitializeNewArmies(grid);
         Ground.Instance.InitializeNewMap(grid);
         TreeManager.Instance.InitializeRandomTrees(grid);
+        UnitManager.Instance.InitializeNewArmies(grid);
     }
+
 
     public void DeclareWinner(int playerIndex)
     {

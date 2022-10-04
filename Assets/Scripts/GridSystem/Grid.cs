@@ -2,6 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System;
+using Random = UnityEngine.Random;
+
 
 namespace GridSystem
 {
@@ -30,6 +32,8 @@ namespace GridSystem
         }
 
 
+        //public Methods
+        //positional 
         public Vector2Int? GetGridPosition (Vector3 worldPosition)
         {
             if (!IsInGrid(worldPosition)) return null;
@@ -52,6 +56,39 @@ namespace GridSystem
         }
 
 
+        public bool IsInGrid(Vector2Int gridPosition)
+        {
+            if (gridPosition.x < 0 ||
+                gridPosition.y < 0 ||
+                gridPosition.x >= gridSize.x ||
+                gridPosition.y >= gridSize.y)
+            {
+                return false;
+            }
+            else
+            {
+                return true;
+            }
+        }
+
+
+        public bool IsInGrid(Vector3 worldPosition)
+        {
+            if (worldPosition.x < 0 ||
+                worldPosition.z < 0 ||
+                worldPosition.x >= gridSize.x ||
+                worldPosition.z >= gridSize.y)
+            {
+                return false;
+            }
+            else
+            {
+                return true;
+            }
+        }
+
+
+        //content related
         public GridObject TryAddObject(GameObject prefab, Vector2Int gridPosition, bool isObstacle = false)
         {
             GridElement element = GetGridElement(gridPosition);
@@ -80,29 +117,6 @@ namespace GridSystem
         }
 
 
-        public bool TryDestroyObject(Vector2Int gridPosition)
-        {
-            GridElement element = GetGridElement(gridPosition);
-
-            //if grid element not valid return false
-            if (element == null) return false;
-            if (element.IsFree()) return false;
-
-            //if grid element valid, destroy object
-            element.DestroyGridObject();
-            return true;
-        }
-
-
-        public bool TryDestroyObject(Vector3 worldPosition)
-        {
-            Vector2Int? gridPosition = GetGridPosition(worldPosition);
-            if (gridPosition == null) return false;
-
-            return TryDestroyObject((Vector2Int)gridPosition);
-        }
-
-
         public GridElement GetGridElement(Vector2Int gridPosition)
         {
             if (!IsInGrid(gridPosition)) return null;
@@ -111,34 +125,91 @@ namespace GridSystem
         }
 
 
-        public bool IsInGrid(Vector2Int gridPosition)
+        public Vector2Int GetRandomPosition()
         {
-            if (gridPosition.x < 0 ||
-                gridPosition.y < 0 ||
-                gridPosition.x >= gridSize.x ||
-                gridPosition.y >= gridSize.y)
+            int x = Random.Range(0, gridSize.x);
+            int y = Random.Range(0, gridSize.y);
+
+            return new Vector2Int(x, y);
+        }
+
+
+        public Vector2Int FindAvailablePositionAround(Vector2Int center) //function that spirals around a point to find free positions
+        {
+            int minX = center.x;
+            int maxX = center.x; 
+            int minY = center.y;
+            int maxY = center.y;
+
+            Vector2Int current = center;
+
+            while (true)
             {
-                return false;
-            } else {
-                return true;
+                //check if is valid answer
+                GridElement element = GetGridElement(current);
+                Debug.Log(current);
+
+                if (element != null) {
+                    if (element.IsFree() && !element.IsBlocked())
+                    {
+                        return current;
+                    }
+                }
+
+                //find next position in spiral
+                if (current.x == maxX && current.y != maxY) //is at right of spiral
+                {
+                    if (current.y < minY) //is at edge
+                    {
+                        minY = current.y; //mark new min
+                        current = new Vector2Int(current.x - 1, current.y); //move left
+                    }
+                    else //not on edge
+                    {
+                        current = new Vector2Int(current.x, current.y - 1); //move down
+                    }
+                }
+                else if (current.y == minY) //is at bottom of spiral
+                {
+                    if (current.x < minX) //is at edge
+                    {
+                        minX = current.x; //mark new min
+                        current = new Vector2Int(current.x, current.y + 1); //move up
+                    }
+                    else //not on edge
+                    {
+                        current = new Vector2Int(current.x - 1, current.y); //move left
+                    }
+                }
+                else if (current.x == minX) //is at left of spiral
+                {
+                    if (current.y > maxY) //is at edge
+                    {
+                        maxY = current.y; //mark new max
+                        current = new Vector2Int(current.x + 1, current.y); //move right
+                    }
+                    else //not on edge
+                    {
+                        current = new Vector2Int(current.x, current.y + 1); //move up
+                    }
+                }
+                else if (current.y == maxY) //is at top of spiral
+                {
+                    if (current.x > maxX) //is at edge
+                    {
+                        maxX = current.x; //mark new max
+                        current = new Vector2Int(current.x, current.y - 1); //move down
+                    }
+                    else //not on edge
+                    {
+                        current = new Vector2Int(current.x + 1, current.y); //move right
+                    }
+                }
             }
         }
 
 
-        public bool IsInGrid(Vector3 worldPosition)
-        {
-            if (worldPosition.x < 0 ||
-                worldPosition.z < 0 ||
-                worldPosition.x >= gridSize.x ||
-                worldPosition.z >= gridSize.y)
-            {
-                return false;
-            } else {
-                return true;
-            }
-        }
-
-
+        //pathfinding
         public (int, List<Vector2Int>) FindPath(Vector2Int startPosition, Vector2Int endPosition)
         {
             return pathFinder.FindPath(startPosition, endPosition);
