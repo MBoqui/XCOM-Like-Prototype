@@ -49,8 +49,8 @@ public class GameManager : MonoBehaviour
         stateMachine.grid = grid;
 
         UnitManager.Instance.InitializeNewArmies(grid);
-        TreeManager.Instance.InitializeRandomTrees(grid);
         Ground.Instance.InitializeNewMap(grid);
+        TreeManager.Instance.InitializeRandomTrees(grid);
     }
 
     public void DeclareWinner(int playerIndex)

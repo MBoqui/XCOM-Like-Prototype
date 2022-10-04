@@ -10,6 +10,8 @@ public class GameSettings : MonoBehaviour
     public float treeDensity { get; private set; }
     public int numberPlayers { get; private set; }
 
+    [SerializeField] Color[] playerColors;
+
 
     void Awake()
     {
@@ -22,5 +24,10 @@ public class GameSettings : MonoBehaviour
         this.gridSize = gridSize;
         this.treeDensity = treeDensity;
         this.numberPlayers = numberPlayers;
+    }
+
+    public Color GetColor(int colorIndex)
+    {
+        return playerColors[colorIndex];
     }
 }

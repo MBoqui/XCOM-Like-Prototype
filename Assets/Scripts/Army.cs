@@ -4,8 +4,21 @@ using UnityEngine;
 
 public class Army
 {
-    int playerIndex;
-    Color color;
+    public int playerIndex { get; private set; }
+    public Color color { get; private set; }
+    public int numberTanks { get; private set; }
 
-    bool isEliminated;
+    public bool isEliminated { get; private set; }
+
+    public Army (int playerIndex, Color color, int numberTanks)
+    {
+        this.playerIndex = playerIndex;
+        this.color = color;
+        this.numberTanks = numberTanks;
+    }
+
+    public void SetEliminated()
+    {
+        isEliminated = true;
+    }
 }

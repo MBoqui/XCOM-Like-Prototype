@@ -10,11 +10,10 @@ public class UnitManager : MonoBehaviour
     public static UnitManager Instance { get; private set; }
 
     [SerializeField] GameObject tankPrefab;
-    [SerializeField] int unitsPerPlayer = 6;
     Grid grid;
-    [SerializeField] Color[] playerColors;
 
     public List<Tank> allTanks = new List<Tank> ();
+    Army[] armies;
 
 
     void Awake()
@@ -30,11 +29,11 @@ public class UnitManager : MonoBehaviour
 
         ClearTanks();
 
-        for (int i = 0; i < GameSettings.Instance.numberPlayers; i++)
+        for (int i = 0; i < armies.Length; i++)
         {
-            for (int j = 0; j < unitsPerPlayer; j++)
+            for (int j = 0; j < armies[i].numberTanks; j++)
             {
-                TryAddTank(i + 1, new Vector2Int(i, j));
+                TryAddTank(armies[i], new Vector2Int(i, j));
             }
         }
     }
@@ -57,15 +56,20 @@ public class UnitManager : MonoBehaviour
         }
     }
 
+    public void SetArmies(Army[] armies)
+    {
+        this.armies = armies;
+    }
 
-    bool TryAddTank(int playerIndex, Vector2Int gridPosition)
+
+    bool TryAddTank(Army army, Vector2Int gridPosition)
     {
         GridObject newUnit = grid.TryAddObject(tankPrefab, gridPosition);
 
         if (newUnit != null)
         {
             Tank newTank = newUnit.GetComponent<Tank>();
-            newTank.Initialize(playerIndex, playerColors[playerIndex - 1]);
+            newTank.Initialize(army.playerIndex, army.color);
 
             allTanks.Add(newTank);
         }
