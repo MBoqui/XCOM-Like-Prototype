@@ -18,6 +18,7 @@ public class GameSetupMenu : MonoBehaviour
     List<ArmyCreator> creators = new List<ArmyCreator>();
 
 
+    //Unity Messages
     private void Awake()
     {
         if (Instance != null) Destroy(this);
@@ -29,6 +30,8 @@ public class GameSetupMenu : MonoBehaviour
         Disable();
     }
 
+
+    //public Methods
     public void StartMatch()
     {
         WriteToSettings();
@@ -77,6 +80,13 @@ public class GameSetupMenu : MonoBehaviour
     }
 
 
+    public int GetNumberPlayers()
+    {
+        return creators.Count;
+    }
+
+
+    //private Methods
     void WriteToSettings()
     {
         Vector2Int gridSize = new Vector2Int(int.Parse(gridSizeX.text), int.Parse(gridSizeY.text));

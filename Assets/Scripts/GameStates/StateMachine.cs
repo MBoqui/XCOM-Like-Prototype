@@ -12,10 +12,12 @@ namespace GameStates
 
         public Grid grid;
 
+
         public void Execute()
         {
             currentState.Execute();
         }
+
 
         public void Exit()
         {
@@ -28,6 +30,7 @@ namespace GameStates
             currentState = newState;
             currentState.Enter();
         }
+
 
         public void GoToNextTurn(int currentTurnIndex)
         {

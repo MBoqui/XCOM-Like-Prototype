@@ -27,6 +27,8 @@ public class ArmyCreator : MonoBehaviour
 
     public void RemoveArmy()
     {
+        if (GameSetupMenu.Instance.GetNumberPlayers() <= 2) return;
+
         GameSetupMenu.Instance.RemovePlayer(this);
         GameSetupMenu.Instance.RecalculateplayerIndex();
         Destroy(gameObject);
